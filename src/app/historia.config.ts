@@ -140,12 +140,11 @@ export const HISTORIA = {
       antetitulo: 'Capítulo 6 · Mi persona',
       pregunta: '¿Quién es mi profe, mi vecina y mi persona favorita?',
       tipo: 'opciones',
-      opciones: ['No tengo 🤷', 'La vecina del 3° B', 'Vos, obvio ❤️', 'El gatito blanco'],
+      opciones: ['No tengo 🤷', 'La rosa', 'Vos, obvio ❤️'],
       correctas: ['Vos, obvio ❤️'],
       reaccionesError: [
         '¿¿Cómo que no?? 😤 Pensalo bien…',
-        'Esa vecina no existe, la inventé yo 🙈',
-        'El gatito es lindo, pero no tanto 🐱',
+        '¿La rosa? Nooo, pensalo de nuevo 🙈',
       ],
       mensajeAcierto: 'Vos: mi profe, mi vecina y mi persona favorita en todo el mundo, bebé hermosaaa 💜',
       foto: 'assets/fotos/06-persona-favorita.jpg',
@@ -216,12 +215,12 @@ export const HISTORIA = {
 
   contrato: {
     titulo: 'CONTRATO OFICIAL DE NOVIAZGO',
-    partes: 'Entre mi ratita bella, guapa y hermosa, y su príncipe.',
+    partes: 'Entre mi ratita bella, guapa y hermosa, y su bebé.',
     clausula: 'Cláusula única: seguir compartiendo besos, abrazos, mimos y muchos momentos juntos.',
     vigencia: 'Vigencia: para siempre, con renovación diaria mediante besitos.',
     pregunta: '¿QUERÉS SER MI NOVIA? ❤️',
     botonSi: 'SÍ, QUIERO SER TU RATITA OFICIAL ❤️',
-    botonBeso: 'SÍ, PERO QUIERO DARLE UN BESO A MI PRÍNCIPE PRIMERO 😘',
+    botonBeso: 'SÍ, PERO QUIERO DARLE UN BESO A MI BEBÉ PRIMERO 😘',
   },
 
   firma: {
@@ -232,7 +231,7 @@ export const HISTORIA = {
 
   recuerdo: {
     mensaje: 'Desde hoy, oficialmente, mi ratita es mi novia. ❤️',
-    firmado: 'Firmado: su príncipe y su ratita bella, guapa y hermosa.',
+    firmado: 'Firmado: su bebé y su ratita bella, guapa y hermosa.',
     aclaracion: 'Recuerdo simbólico hecho con amor. No es un contrato legal (pero vale igual 😉).',
     botonDescargar: 'Descargar recuerdo',
   },
