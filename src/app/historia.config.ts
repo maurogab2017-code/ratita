@@ -214,7 +214,10 @@ export const HISTORIA = {
   },
 
   contrato: {
+    /** Título en el recuerdo final. */
     titulo: 'CONTRATO OFICIAL DE NOVIAZGO',
+    /** Título la primera vez que aparece (antes de que diga que sí). */
+    tituloPropuesta: 'CONTRATO OFICIAL',
     partes: 'Entre mi ratita bella, guapa y hermosa, y su bebé.',
     clausula: 'Cláusula única: seguir compartiendo besos, abrazos, mimos y muchos momentos juntos.',
     vigencia: 'Vigencia: para siempre, con renovación diaria mediante besitos.',

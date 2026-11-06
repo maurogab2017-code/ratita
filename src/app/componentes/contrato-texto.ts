@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { HISTORIA } from '../historia.config';
 import { Ratita } from './ratita';
 
@@ -13,7 +13,7 @@ import { Ratita } from './ratita';
       <span class="corazon">❤</span>
       <app-ratita variante="el" [espejo]="true" [ojosCerrados]="true" />
     </div>
-    <h2>{{ c.titulo }}</h2>
+    <h2>{{ titulo() ?? c.titulo }}</h2>
     <div class="adorno" aria-hidden="true">♥ ♥ ♥</div>
     <p class="partes">{{ c.partes }}</p>
     <p><strong>{{ etiqueta(c.clausula) }}</strong>{{ resto(c.clausula) }}</p>
@@ -36,6 +36,8 @@ import { Ratita } from './ratita';
 })
 export class ContratoTexto {
   readonly c = HISTORIA.contrato;
+  /** Si viene, reemplaza el título del contrato. */
+  readonly titulo = input<string | undefined>(undefined);
   etiqueta(t: string) {
     const i = t.indexOf(':');
     return i > 0 ? t.slice(0, i + 1) : '';

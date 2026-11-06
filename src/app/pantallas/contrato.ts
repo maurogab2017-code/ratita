@@ -12,7 +12,7 @@ import { HISTORIA } from '../historia.config';
     <article class="cartulina">
       <span class="esquina e1">♥</span><span class="esquina e2">♥</span>
       <span class="esquina e3">♥</span><span class="esquina e4">♥</span>
-      <app-contrato-texto />
+      <app-contrato-texto [titulo]="c.tituloPropuesta" />
     </article>
 
     @if (!besando()) {
