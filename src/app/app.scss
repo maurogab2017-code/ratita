@@ -1,0 +1,160 @@
+:host {
+  display: block;
+  min-height: 100dvh;
+  position: relative;
+}
+
+.progreso {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  padding: 18px 16px 0;
+}
+.punto {
+  color: rgba(199, 125, 255, 0.3);
+  font-size: 0.95rem;
+  transition: color 0.4s, transform 0.4s;
+}
+.punto.hecho {
+  color: var(--fucsia);
+  transform: scale(1.2);
+}
+
+.escenario {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: min(100%, 520px);
+  margin: 0 auto;
+  padding: 20px 16px 120px;
+}
+
+.pantalla {
+  grid-area: 1 / 1;
+  display: flex;
+  align-items: center;
+  min-height: calc(100dvh - 180px);
+}
+
+.entrar {
+  animation: entrar 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation-delay: 0.15s;
+}
+.salir {
+  animation: salir 0.35s ease-in both;
+  pointer-events: none;
+}
+@keyframes entrar {
+  from {
+    opacity: 0;
+    transform: translateY(26px) scale(0.97);
+    filter: blur(6px);
+  }
+}
+@keyframes salir {
+  to {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.98);
+    filter: blur(6px);
+  }
+}
+
+.bienvenida {
+  width: 100%;
+  text-align: center;
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+}
+.ratita-hola {
+  width: 150px;
+  animation: saludar 2.8s ease-in-out infinite;
+  filter: drop-shadow(0 10px 30px rgba(255, 46, 147, 0.35));
+}
+h1 {
+  margin: 8px 0 0;
+  font-family: var(--f-titulo);
+  font-size: clamp(1.9rem, 8.5vw, 2.8rem);
+  line-height: 1.12;
+  background: linear-gradient(100deg, #fff 0%, var(--rosa) 45%, var(--lila) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.sub {
+  margin: 0;
+  font-size: 1.15rem;
+}
+.pregunta-hola {
+  margin: 10px 0 18px;
+  font-weight: 700;
+  color: var(--lila);
+  font-size: 1.1rem;
+}
+
+.mensaje-final {
+  width: 100%;
+  display: grid;
+  gap: 14px;
+  text-align: center;
+  justify-items: center;
+}
+.mensaje-final h2 {
+  margin: 0;
+  font-family: var(--f-titulo);
+  font-size: clamp(1.7rem, 7vw, 2.3rem);
+  color: var(--rosa);
+}
+.mensaje-final p {
+  margin: 0;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+.pareja {
+  display: flex;
+  align-items: flex-end;
+}
+.pareja app-ratita {
+  width: 100px;
+}
+.pareja app-ratita:first-child {
+  margin-right: -14px;
+  transform: rotate(7deg);
+}
+.linea {
+  animation: aparecer 0.9s ease-out both;
+}
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+@keyframes saludar {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0);
+  }
+  50% {
+    transform: translateY(-8px) rotate(-3deg);
+  }
+}
+
+.gatito-fijo {
+  position: fixed;
+  right: 10px;
+  bottom: -6px;
+  z-index: 5;
+  width: 80px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .entrar,
+  .salir,
+  .linea,
+  .ratita-hola {
+    animation: none;
+  }
+}

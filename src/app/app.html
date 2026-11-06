@@ -1,0 +1,57 @@
+<app-corazones-flotantes />
+
+@if (progreso(); as prog) {
+  <nav class="progreso" aria-label="Progreso">
+    @for (hecho of prog; track $index) {
+      <span class="punto" [class.hecho]="hecho">♥</span>
+    }
+  </nav>
+}
+
+<main class="escenario">
+  @for (p of pantallas(); track p.clave) {
+    <section class="pantalla" animate.enter="entrar" animate.leave="salir">
+      @switch (p.paso) {
+        @case ('bienvenida') {
+          <div class="bienvenida">
+            <app-ratita class="ratita-hola" variante="ella" />
+            <h1>{{ h.bienvenida.saludo }}</h1>
+            <p class="sub">{{ h.bienvenida.subtitulo }}</p>
+            <p class="pregunta-hola">{{ h.bienvenida.pregunta }}</p>
+            <button type="button" class="btn grande" (click)="ir('pregunta')">{{ h.bienvenida.boton }}</button>
+          </div>
+        }
+        @case ('pregunta') {
+          <app-pregunta [pregunta]="p.pregunta" [ultima]="p.i === h.preguntas.length - 1" (siguiente)="siguientePregunta()" />
+        }
+        @case ('mensaje') {
+          <div class="mensaje-final">
+            <div class="pareja" aria-hidden="true">
+              <app-ratita variante="ella" [ojosCerrados]="true" />
+              <app-ratita variante="el" [espejo]="true" />
+            </div>
+            <h2>{{ h.mensajeFinal.titulo }}</h2>
+            @for (linea of mensajeLineas; track $index) {
+              <p class="linea" [style.animation-delay.s]="0.4 + $index * 0.9">{{ linea }}</p>
+            }
+            <button type="button" class="btn grande linea" [style.animation-delay.s]="0.4 + mensajeLineas.length * 0.9"
+              (click)="ir('contrato')">{{ h.mensajeFinal.boton }} 🎁</button>
+          </div>
+        }
+        @case ('contrato') {
+          <app-contrato (acepto)="aceptar($event)" />
+        }
+        @case ('firma') {
+          <app-firma [conBeso]="conBeso()" (firmado)="firmar($event)" />
+        }
+        @case ('recuerdo') {
+          @if (firmado(); as datos) {
+            <app-recuerdo [datos]="datos" (reiniciar)="reiniciar()" />
+          }
+        }
+      }
+    </section>
+  }
+</main>
+
+<app-gatito class="gatito-fijo" [mensaje]="gatito.mensaje()" [reaccion]="gatito.reaccion()" />
