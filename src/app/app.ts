@@ -4,17 +4,18 @@ import { Gatito } from './componentes/gatito';
 import { Ratita } from './componentes/ratita';
 import { GatitoService } from './gatito.service';
 import { HISTORIA } from './historia.config';
+import { PantallaAcceso } from './pantallas/acceso';
 import { PantallaContrato } from './pantallas/contrato';
 import { Firmado, PantallaFirma } from './pantallas/firma';
 import { PantallaPregunta } from './pantallas/pregunta';
 import { PantallaRecuerdo } from './pantallas/recuerdo';
 
-type Paso = 'bienvenida' | 'pregunta' | 'mensaje' | 'contrato' | 'firma' | 'recuerdo';
+type Paso = 'acceso' | 'bienvenida' | 'pregunta' | 'mensaje' | 'contrato' | 'firma' | 'recuerdo';
 
 @Component({
   selector: 'app-root',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CorazonesFlotantes, Gatito, Ratita, PantallaPregunta, PantallaContrato, PantallaFirma, PantallaRecuerdo],
+  imports: [PantallaAcceso, CorazonesFlotantes, Gatito, Ratita, PantallaPregunta, PantallaContrato, PantallaFirma, PantallaRecuerdo],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
@@ -22,10 +23,12 @@ export class App {
   readonly h = HISTORIA;
   readonly gatito = inject(GatitoService);
 
-  readonly paso = signal<Paso>('bienvenida');
+  readonly paso = signal<Paso>('acceso');
   readonly indice = signal(0);
   readonly conBeso = signal(false);
   readonly firmado = signal<Firmado | null>(null);
+  /** El nombre que escribió al entrar; se usa para completar la firma. */
+  readonly nombreElla = signal('');
 
   /** Una sola pantalla a la vez; la clave cambia para disparar la transición. */
   readonly pantallas = computed(() => {
@@ -37,7 +40,7 @@ export class App {
   readonly progreso = computed(() => {
     const total = this.h.preguntas.length;
     const paso = this.paso();
-    if (paso === 'bienvenida') return null;
+    if (paso === 'acceso' || paso === 'bienvenida') return null;
     const hechas = paso === 'pregunta' ? this.indice() : total;
     return Array.from({ length: total }, (_, k) => k < hechas);
   });
@@ -62,6 +65,11 @@ export class App {
     } else {
       this.ir('mensaje');
     }
+  }
+
+  entrar(nombre: string) {
+    this.nombreElla.set(nombre);
+    this.ir('bienvenida');
   }
 
   aceptar(como: 'si' | 'beso') {

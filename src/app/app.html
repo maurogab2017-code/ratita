@@ -12,6 +12,9 @@
   @for (p of pantallas(); track p.clave) {
     <section class="pantalla" animate.enter="entrar" animate.leave="salir">
       @switch (p.paso) {
+        @case ('acceso') {
+          <app-acceso (entro)="entrar($event)" />
+        }
         @case ('bienvenida') {
           <div class="bienvenida">
             <app-ratita class="ratita-hola" variante="ella" />
@@ -42,7 +45,7 @@
           <app-contrato (acepto)="aceptar($event)" />
         }
         @case ('firma') {
-          <app-firma [conBeso]="conBeso()" (firmado)="firmar($event)" />
+          <app-firma [conBeso]="conBeso()" [nombreInicial]="nombreElla()" (firmado)="firmar($event)" />
         }
         @case ('recuerdo') {
           @if (firmado(); as datos) {

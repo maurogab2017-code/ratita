@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input, output, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, input, output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Escena } from '../componentes/escena';
 import { LienzoFirma } from '../componentes/lienzo-firma';
@@ -61,8 +61,9 @@ export interface Firmado {
     .falta { margin: 0; text-align: center; color: #d6249f; font-weight: 700; }
   `,
 })
-export class PantallaFirma {
+export class PantallaFirma implements OnInit {
   readonly conBeso = input(false);
+  readonly nombreInicial = input('');
   readonly firmado = output<Firmado>();
 
   readonly f = HISTORIA.firma;
@@ -72,6 +73,10 @@ export class PantallaFirma {
   readonly firma = signal<string | null>(null);
   readonly intento = signal(false);
   nombre = '';
+
+  ngOnInit() {
+    this.nombre = this.nombreInicial();
+  }
 
   firmar() {
     this.intento.set(true);

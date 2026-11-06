@@ -55,6 +55,21 @@ export const HISTORIA = {
     placeholderNombre: 'Tu nombre, ratita',
   },
 
+  /** Pantalla de entrada: solo pasa si escribe su nombre. */
+  acceso: {
+    titulo: 'Esto es solo para una persona 🔒',
+    texto: 'Antes de entrar, decime cómo te llamás:',
+    placeholder: 'Tu nombre…',
+    boton: 'Entrar',
+    // Se comparan sin tildes ni mayúsculas; vale el nombre completo o la primera palabra.
+    nombresValidos: ['Ro', 'Rocío', 'Roci', 'Rochi', 'Rocito'],
+    errores: [
+      'Mmm… vos no sos mi ratita 🐭',
+      'Esto es solo para ella, perdón 🙈',
+      'El gatito no te deja pasar 🐱',
+    ],
+  },
+
   bienvenida: {
     saludo: 'Hola, mi ratita bella, guapa y hermosa ❤️',
     subtitulo: 'Tu ratita te preparó algo muy especial.',
@@ -80,7 +95,7 @@ export const HISTORIA = {
       antetitulo: 'Capítulo 2 · El primer beso',
       pregunta: '¿Dónde nos dimos nuestro primer beso?',
       tipo: 'opciones',
-      opciones: ['En el cine', 'En Boticario', 'En una plaza', 'En la puerta de casa'],
+      opciones: ['En el cine', 'En la calle', 'En Boticario', 'En la Sabattini'],
       correctas: ['En Boticario'],
       mensajeAcierto: 'En Boticario… y desde ese beso no te pude sacar más de mi cabeza 😘',
       ilustracion: 'beso',
