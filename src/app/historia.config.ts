@@ -46,7 +46,8 @@ export const HISTORIA = {
   /** Cómo firmás vos. Aparece ya escrito en el contrato. */
   el: {
     nombre: 'Mauro',
-    apodo: 'su príncipe',
+    /** Cómo aparecés en la firma ("Firma de su ratita"). */
+    apodo: 'su ratita',
   },
 
   /** Lo que se le sugiere a ella en el campo de nombre (puede escribir lo que quiera). */
@@ -67,9 +68,9 @@ export const HISTORIA = {
       antetitulo: 'Capítulo 1 · El comienzo',
       pregunta: '¿Qué día nos vimos por primera vez?',
       tipo: 'opciones',
-      // ⚠️ COMPLETAR: poné la fecha real en "opciones" y la misma en "correctas".
-      opciones: ['14 de febrero', '3 de marzo', '21 de septiembre', '1 de mayo'],
-      correctas: ['3 de marzo'],
+      // La fecha correcta tiene que estar en "opciones" y también en "correctas".
+      opciones: ['14 de febrero', '6 de agosto', '21 de septiembre', '1 de mayo'],
+      correctas: ['6 de agosto'],
       mensajeAcierto: 'Ese día empezó una de las historias más lindas de mi vida ❤️',
       foto: 'assets/fotos/01-primer-encuentro.jpg',
       ilustracion: 'corazon',
@@ -89,10 +90,11 @@ export const HISTORIA = {
       antetitulo: 'Capítulo 3 · El tercero en la relación',
       pregunta: '¿Cómo se llama nuestro osito?',
       tipo: 'opciones-o-texto',
-      opciones: ['Pochoclo', 'Lomito', 'Algodón'],
-      correctas: ['Lomito'],
+      opciones: ['Pochoclo', 'Lomito Caelia', 'Algodón'],
+      // Alcanza con que escriba alguna de estas (sin importar tildes ni mayúsculas).
+      correctas: ['Lomito Caelia', 'Lomo Caelia', 'Lomito', 'Lomo', 'Caelia'],
       placeholder: 'Escribí su nombre…',
-      mensajeAcierto: '¡Lomito! El osito más mimado del mundo, casi tanto como vos 🧸',
+      mensajeAcierto: '¡Lomito Caelia! El osito más mimado del mundo, casi tanto como vos 🧸',
       foto: 'assets/fotos/03-osito.jpg',
       ilustracion: 'osito',
     },

@@ -30,7 +30,7 @@ export interface Firmado {
       </section>
 
       <section class="parte">
-        <h3>Firma de su ratita</h3>
+        <h3>Firma de su ratita bella</h3>
         <label for="nombre-ella">Tu nombre</label>
         <input id="nombre-ella" name="nombre" [(ngModel)]="nombre" [placeholder]="placeholderNombre" autocomplete="given-name" />
         <app-lienzo-firma (cambio)="firma.set($event)" />
