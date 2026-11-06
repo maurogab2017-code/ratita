@@ -3,6 +3,7 @@ import { CorazonesFlotantes } from './componentes/corazones-flotantes';
 import { Fotitos } from './componentes/fotitos';
 import { Gatito } from './componentes/gatito';
 import { Ratita } from './componentes/ratita';
+import { festejoGrande } from './festejo';
 import { GatitoService } from './gatito.service';
 import { HISTORIA } from './historia.config';
 import { PantallaAcceso } from './pantallas/acceso';
@@ -81,6 +82,7 @@ export class App {
   firmar(datos: Firmado) {
     this.firmado.set(datos);
     this.ir('recuerdo');
+    festejoGrande();
   }
 
   reiniciar() {

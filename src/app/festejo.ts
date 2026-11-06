@@ -31,10 +31,27 @@ export function festejoChico() {
 /** Festejo grande (cuando dice que sí y cuando firma). */
 export function festejoGrande() {
   if (reducido()) return;
-  const fin = Date.now() + 1800;
+  // 10 segundos de corazones por toda la pantalla: cañones a los costados
+  // y una lluvia que cae desde arriba a lo ancho.
+  const fin = Date.now() + 10000;
+  let cuadro = 0;
   const tirar = () => {
-    confetti({ particleCount: 6, angle: 60, spread: 60, origin: { x: 0, y: 0.7 }, shapes: [forma()], colors: colores, scalar: 1.5 });
-    confetti({ particleCount: 6, angle: 120, spread: 60, origin: { x: 1, y: 0.7 }, shapes: [forma()], colors: colores, scalar: 1.5 });
+    cuadro++;
+    if (cuadro % 3 === 0) {
+      confetti({ particleCount: 3, angle: 60, spread: 65, startVelocity: 55, origin: { x: 0, y: 0.8 }, shapes: [forma()], colors: colores, scalar: 1.5 });
+      confetti({ particleCount: 3, angle: 120, spread: 65, startVelocity: 55, origin: { x: 1, y: 0.8 }, shapes: [forma()], colors: colores, scalar: 1.5 });
+    }
+    confetti({
+      particleCount: 1,
+      startVelocity: 0,
+      ticks: 320,
+      gravity: 0.55,
+      drift: Math.random() - 0.5,
+      origin: { x: Math.random(), y: -0.05 },
+      shapes: [forma()],
+      colors: colores,
+      scalar: 1.2 + Math.random() * 0.8,
+    });
     if (Date.now() < fin) requestAnimationFrame(tirar);
   };
   tirar();
