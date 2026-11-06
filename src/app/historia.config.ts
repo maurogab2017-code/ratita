@@ -235,7 +235,7 @@ export const HISTORIA = {
   recuerdo: {
     mensaje: 'Desde hoy, oficialmente, mi ratita es mi novia. ❤️',
     firmado: 'Firmado: su bebé y su ratita bella, guapa y hermosa.',
-    aclaracion: 'Recuerdo simbólico hecho con amor. No es un contrato legal (pero vale igual 😉).',
+    aclaracion: 'Este contrato no se puede romper nunca 💜',
     botonDescargar: 'Descargar recuerdo',
   },
 };
