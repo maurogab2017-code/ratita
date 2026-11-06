@@ -63,3 +63,34 @@ export function lluviaDeBesos() {
   const beso = confetti.shapeFromText({ text: '💋', scalar: 2.4 });
   confetti({ particleCount: 28, spread: 110, startVelocity: 38, origin: { y: 0.75 }, shapes: [beso], scalar: 2.4, ticks: 160, flat: true });
 }
+
+let emojis: confetti.Shape[] | null = null;
+
+/** Lluvia de corazones, gatitos, ositos y muchas ratitas por toda la pantalla. */
+export function lluviaDeAmor(ms = 6000) {
+  if (reducido()) return;
+  emojis ??= ['🐭', '🐭', '🐭', '🐱', '🧸', '💖', '💜'].map((text) => confetti.shapeFromText({ text, scalar: 2.6 }));
+  const fin = Date.now() + ms;
+  let cuadro = 0;
+  const tirar = () => {
+    cuadro++;
+    const forma = emojis![Math.floor(Math.random() * emojis!.length)];
+    confetti({
+      particleCount: 3,
+      startVelocity: 0,
+      ticks: 520,
+      gravity: 0.7,
+      drift: Math.random() - 0.5,
+      origin: { x: Math.random(), y: -0.08 },
+      shapes: [forma],
+      scalar: 2.2 + Math.random() * 1.2,
+      flat: true,
+    });
+    if (cuadro % 3 === 0) {
+      confetti({ particleCount: 4, angle: 60, spread: 60, startVelocity: 55, origin: { x: 0, y: 0.85 }, shapes: [forma], scalar: 2.4, flat: true });
+      confetti({ particleCount: 4, angle: 120, spread: 60, startVelocity: 55, origin: { x: 1, y: 0.85 }, shapes: [forma], scalar: 2.4, flat: true });
+    }
+    if (Date.now() < fin) requestAnimationFrame(tirar);
+  };
+  tirar();
+}

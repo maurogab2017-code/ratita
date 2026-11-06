@@ -30,7 +30,15 @@ export function normalizar(texto: string): string {
       <h2>{{ pregunta().pregunta }}</h2>
 
       @if (!acerto()) {
-        @if (pregunta().opciones && pregunta().tipo !== 'texto') {
+        @if (pregunta().tipo === 'fotos') {
+          <div class="fotos">
+            @for (op of pregunta().opciones; track op; let i = $index) {
+              <button type="button" class="foto-op" [style.--giro.deg]="[-4, 3, 4, -3][i % 4]" (click)="elegir(op)" aria-label="Elegir esta foto">
+                <img [src]="op" alt="" />
+              </button>
+            }
+          </div>
+        } @else if (pregunta().opciones && pregunta().tipo !== 'texto') {
           <div class="opciones" [class.muchas]="(pregunta().opciones?.length ?? 0) > 4">
             @for (op of pregunta().opciones; track op) {
               <button type="button" class="opcion" [class.mal]="malas().includes(op)" (click)="elegir(op)">{{ op }}</button>
@@ -50,9 +58,9 @@ export function normalizar(texto: string): string {
         }
       } @else {
         <div class="acierto">
-          <app-escena [ilustracion]="pregunta().ilustracion" [foto]="pregunta().foto" />
+          <app-escena [ilustracion]="pregunta().ilustracion" [foto]="elegida() ?? pregunta().foto" />
           <p class="mensaje">{{ pregunta().mensajeAcierto }}</p>
-          @if (fotito()) {
+          @if (fotito() && pregunta().tipo !== 'fotos') {
             <app-fotitos [fotos]="[fotito()!]" />
           }
           <button type="button" class="btn grande" (click)="siguiente.emit()">{{ ultima() ? 'Seguir ❤️' : 'Siguiente pregunta' }}</button>
@@ -65,6 +73,12 @@ export function normalizar(texto: string): string {
     .antetitulo { margin: 0 0 6px; color: var(--lila); font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; font-weight: 700; }
     h2 { margin: 0 0 22px; font-family: var(--f-titulo); font-size: clamp(1.45rem, 6vw, 2rem); line-height: 1.2; }
     .opciones { display: grid; gap: 10px; }
+    .fotos { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; padding: 4px; }
+    .foto-op { padding: 6px 6px 20px; background: #fff; border: 0; border-radius: 3px; cursor: pointer;
+      transform: rotate(var(--giro)); box-shadow: 0 8px 20px rgba(0,0,0,.4); transition: transform .2s; }
+    .foto-op:hover, .foto-op:focus-visible { transform: rotate(0) scale(1.04); }
+    .foto-op:active { transform: scale(.96); }
+    .foto-op img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 2px; }
     .opciones.muchas { grid-template-columns: 1fr 1fr; }
     .opciones.muchas .opcion:last-child:nth-child(odd) { grid-column: 1 / -1; }
     .opcion {
@@ -103,6 +117,8 @@ export class PantallaPregunta {
   readonly acerto = signal(false);
   readonly reaccion = signal<string | null>(null);
   readonly malas = signal<string[]>([]);
+  /** En la pregunta de fotos, la que tocó. */
+  readonly elegida = signal<string | null>(null);
   texto = '';
 
   private readonly tarjeta = viewChild.required<ElementRef<HTMLElement>>('tarjeta');
@@ -111,7 +127,8 @@ export class PantallaPregunta {
 
   elegir(opcion: string) {
     const p = this.pregunta();
-    if (p.tipo === 'todas-correctas') return this.correcto();
+    if (p.tipo === 'fotos') this.elegida.set(opcion);
+    if (p.tipo === 'todas-correctas' || p.tipo === 'fotos') return this.correcto();
     const ok = (p.correctas ?? []).some((c) => normalizar(c) === normalizar(opcion));
     if (ok) this.correcto();
     else this.incorrecto(opcion);

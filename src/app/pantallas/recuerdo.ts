@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, ElementRef, input, output, signal, viewChild } from '@angular/core';
 import { ContratoTexto } from '../componentes/contrato-texto';
+import { lluviaDeAmor } from '../festejo';
 import { HISTORIA } from '../historia.config';
 import { Firmado } from './firma';
 
@@ -38,6 +39,7 @@ import { Firmado } from './firma';
         {{ descargando() ? 'Preparando…' : r.botonDescargar + ' 📸' }}
       </button>
       @if (error()) { <p class="error">{{ error() }}</p> }
+      <button type="button" class="btn grande secundario" (click)="masAmor()">Tirar más amor 🐭🐱🧸💖</button>
       <button type="button" class="link" (click)="reiniciar.emit()">Volver a vivir la historia</button>
     </div>
   `,
@@ -71,6 +73,10 @@ export class PantallaRecuerdo {
   readonly descargando = signal(false);
   readonly error = signal<string | null>(null);
   private readonly doc = viewChild.required<ElementRef<HTMLElement>>('doc');
+
+  masAmor() {
+    lluviaDeAmor();
+  }
 
   async descargar() {
     this.descargando.set(true);

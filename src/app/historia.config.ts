@@ -25,8 +25,10 @@ export interface Pregunta {
    * - 'texto': escribe la respuesta (sin importar tildes ni mayúsculas).
    * - 'opciones-o-texto': puede escribir o tocar una opción.
    * - 'todas-correctas': elija lo que elija, está bien.
+   * - 'fotos': las opciones son fotos (rutas); toque la que toque, está bien
+   *   y se muestra grande la que eligió.
    */
-  tipo: 'opciones' | 'texto' | 'opciones-o-texto' | 'todas-correctas';
+  tipo: 'opciones' | 'texto' | 'opciones-o-texto' | 'todas-correctas' | 'fotos';
   opciones?: string[];
   /**
    * Respuestas que valen como correctas. Se comparan sin tildes, sin mayúsculas
@@ -127,8 +129,22 @@ export const HISTORIA = {
       ilustracion: 'abrazo',
     },
     {
+      id: 'foto-favorita',
+      antetitulo: 'Capítulo 5 · Nuestras fotos',
+      pregunta: '¿Cuál es mi foto favorita?',
+      tipo: 'fotos',
+      opciones: [
+        'assets/fotos/fotito-5.jpg',
+        'assets/fotos/fotito-2.jpg',
+        'assets/fotos/fotito-4.jpg',
+        'assets/fotos/fotito-7.jpg',
+      ],
+      mensajeAcierto: '¡Esa! Aunque en todas salís hermosa 📸',
+      ilustracion: 'corazon',
+    },
+    {
       id: 'apodo',
-      antetitulo: 'Capítulo 5 · Cosas nuestras',
+      antetitulo: 'Capítulo 6 · Cosas nuestras',
       pregunta: '¿Cómo me gusta que me digas?',
       tipo: 'todas-correctas',
       opciones: ['Hermoso', 'Guapo', 'Corazoncito', 'Bello', 'Bebé'],
@@ -136,8 +152,22 @@ export const HISTORIA = {
       ilustracion: 'ratita',
     },
     {
+      id: 'te-amo-primero',
+      antetitulo: 'Capítulo 7 · El primer te amo',
+      pregunta: '¿Quién dijo "te amo" primero?',
+      tipo: 'opciones',
+      opciones: ['Vos', 'Yo', 'Los dos juntos'],
+      correctas: ['Vos'],
+      reaccionesError: [
+        'Nooo, fuiste vos… ¡se te escapó! 🙊',
+        'Mmm, no no. Haceme memoria… 😏',
+      ],
+      mensajeAcierto: '¡Vos! Se te escapó y yo me derretí todo 🙊❤️',
+      ilustracion: 'beso',
+    },
+    {
       id: 'persona-favorita',
-      antetitulo: 'Capítulo 6 · Mi persona',
+      antetitulo: 'Capítulo 8 · Mi persona',
       pregunta: '¿Quién es mi profe, mi vecina y mi persona favorita de todas?',
       tipo: 'opciones',
       opciones: ['El 10 de Belgrano', 'No tengo 🤷', 'Vos, obvio ❤️'],
@@ -151,18 +181,13 @@ export const HISTORIA = {
       ilustracion: 'abrazo',
     },
     {
-      id: 'amor-de-mi-vida',
-      antetitulo: 'Capítulo 7 · La más fácil',
-      pregunta: '¿Quién es el amor de mi vida?',
-      tipo: 'opciones',
-      opciones: ['La comida', 'Belgrano', 'Vos, mi ratita ❤️'],
-      correctas: ['Vos, mi ratita ❤️'],
-      reaccionesError: [
-        'La comida es importante… pero no tanto 🍕',
-        'Belgrano me hace sufrir, vos no 💙',
-      ],
-      mensajeAcierto: 'Sos VOSSSS, BONITA ❤️',
-      ilustracion: 'beso',
+      id: 'lo-que-mas-me-gusta',
+      antetitulo: 'Capítulo 9 · Lo que más me gusta',
+      pregunta: '¿Qué es lo que más me gusta de vos?',
+      tipo: 'todas-correctas',
+      opciones: ['Tu sonrisa', 'Tus ojos', 'Tu forma de ser tan tierna', 'Tu nariz', 'Cómo me hacés sentir'],
+      mensajeAcierto: 'Todas valen… pero la respuesta correcta es TODO 💜',
+      ilustracion: 'abrazo',
     },
     {
       id: 'cuanto-me-amas',
