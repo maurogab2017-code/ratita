@@ -15,7 +15,7 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
     :host { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
     .polaroid {
       margin: 0; padding: 4px 4px 14px; background: #fff; border-radius: 3px;
-      width: var(--ancho, 74px); transform: rotate(var(--giro));
+      width: var(--ancho, 130px); padding: 6px 6px 20px; transform: rotate(var(--giro));
       box-shadow: 0 6px 16px rgba(0,0,0,.35);
       animation: caer .6s cubic-bezier(.2,.9,.3,1.3) both;
     }
