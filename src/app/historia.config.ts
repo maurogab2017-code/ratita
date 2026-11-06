@@ -111,7 +111,7 @@ export const HISTORIA = {
       // Alcanza con que escriba alguna de estas (sin importar tildes ni mayúsculas).
       correctas: ['Lomito Caelia', 'Lomo Caelia', 'Lomito', 'Lomo', 'Caelia'],
       placeholder: 'Escribí su nombre…',
-      mensajeAcierto: '¡Lomito Caelia! El oso hijo más mimado del mundo, y el oso más lindo de todos después de Miki 🧸',
+      mensajeAcierto: '¡Lomito Caelia! El oso más lindo de todos después de Miki 🧸',
       foto: 'assets/fotos/03-osito.jpg',
       ilustracion: 'osito',
     },
