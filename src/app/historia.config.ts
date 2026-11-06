@@ -40,6 +40,8 @@ export interface Pregunta {
   foto?: string;
   /** Ilustración que se muestra al acertar (o si no hay foto). */
   ilustracion: Ilustracion;
+  /** Frases propias cuando erra en esta pregunta (si no, se usan las generales). */
+  reaccionesError?: string[];
 }
 
 export const HISTORIA = {
@@ -109,7 +111,7 @@ export const HISTORIA = {
       // Alcanza con que escriba alguna de estas (sin importar tildes ni mayúsculas).
       correctas: ['Lomito Caelia', 'Lomo Caelia', 'Lomito', 'Lomo', 'Caelia'],
       placeholder: 'Escribí su nombre…',
-      mensajeAcierto: '¡Lomito Caelia! El osito más mimado del mundo, casi tanto como vos 🧸',
+      mensajeAcierto: '¡Lomito Caelia! El oso hijo más mimado del mundo, y el oso más lindo de todos después de Miki 🧸',
       foto: 'assets/fotos/03-osito.jpg',
       ilustracion: 'osito',
     },
@@ -129,8 +131,8 @@ export const HISTORIA = {
       antetitulo: 'Capítulo 5 · Cosas nuestras',
       pregunta: '¿Cómo me gusta que me digas?',
       tipo: 'todas-correctas',
-      opciones: ['Hermoso', 'Guapa', 'Corazoncito', 'Bello', 'Bebé'],
-      mensajeAcierto: '¡Todas son correctas! Viniendo de vos, cualquiera me derrite 🥰',
+      opciones: ['Hermoso', 'Guapo', 'Corazoncito', 'Bello', 'Bebé'],
+      mensajeAcierto: '¡Todas son correctas! Viniendo de vos, todo me gustaaa 🥰',
       ilustracion: 'ratita',
     },
     {
@@ -138,9 +140,14 @@ export const HISTORIA = {
       antetitulo: 'Capítulo 6 · Mi persona',
       pregunta: '¿Quién es mi profe, mi vecina y mi persona favorita?',
       tipo: 'opciones',
-      opciones: ['El gatito blanco', 'Vos, obvio ❤️', 'Lomito'],
+      opciones: ['No tengo 🤷', 'La vecina del 3° B', 'Vos, obvio ❤️', 'El gatito blanco'],
       correctas: ['Vos, obvio ❤️'],
-      mensajeAcierto: 'Vos: mi profe, mi vecina y mi persona favorita en todo el mundo 💜',
+      reaccionesError: [
+        '¿¿Cómo que no?? 😤 Pensalo bien…',
+        'Esa vecina no existe, la inventé yo 🙈',
+        'El gatito es lindo, pero no tanto 🐱',
+      ],
+      mensajeAcierto: 'Vos: mi profe, mi vecina y mi persona favorita en todo el mundo, bebé hermosaaa 💜',
       foto: 'assets/fotos/06-persona-favorita.jpg',
       ilustracion: 'abrazo',
     },
@@ -149,26 +156,45 @@ export const HISTORIA = {
       antetitulo: 'Capítulo 7 · La más fácil',
       pregunta: '¿Quién es el amor de mi vida?',
       tipo: 'opciones',
-      opciones: ['La pizza', 'Vos, mi ratita ❤️', 'Dormir la siesta'],
+      opciones: ['La comida', 'Belgrano', 'Vos, mi ratita ❤️'],
       correctas: ['Vos, mi ratita ❤️'],
-      mensajeAcierto: 'Sos vos, mi ratita. Siempre vos ❤️',
+      reaccionesError: [
+        'La comida es importante… pero no tanto 🍕',
+        'Belgrano me hace sufrir, vos no 💙',
+      ],
+      mensajeAcierto: 'Sos VOSSSS, BONITA ❤️',
       ilustracion: 'beso',
     },
     {
       id: 'cuanto-me-amas',
       antetitulo: 'Última pregunta',
       pregunta: '¿Cuánto me amás?',
-      tipo: 'todas-correctas',
-      opciones: [
-        'Muchísimo',
-        'Más que a nadie',
-        'Hasta el infinito',
-        'Más de lo que las palabras pueden explicar',
+      tipo: 'opciones',
+      opciones: ['Poco', 'Poquito', 'Mucho', 'Muchísimo'],
+      correctas: ['Mucho', 'Muchísimo'],
+      reaccionesError: [
+        '¿¿POCO?? 😤 Elegí de nuevo, ratita',
+        '¿Poquito? El gatito está anotando todo 🐱📝',
+        'Mmm… esa respuesta no la acepto 🙅',
       ],
-      mensajeAcierto: 'Yo te amo muchísimo más, ratita ❤️',
+      mensajeAcierto: 'Yo te amo muchísimo más, mi bella ❤️',
       ilustracion: 'corazon',
     },
   ] satisfies Pregunta[] as Pregunta[],
+
+  /**
+   * Fotitos chiquitas: aparece una en cada respuesta correcta (en orden)
+   * y todas juntas en el mensaje final. Agregá o sacá las que quieras.
+   */
+  fotitos: [
+    'assets/fotos/fotito-1.jpg',
+    'assets/fotos/fotito-2.jpg',
+    'assets/fotos/fotito-3.jpg',
+    'assets/fotos/fotito-4.jpg',
+    'assets/fotos/fotito-5.jpg',
+    'assets/fotos/fotito-6.jpg',
+    'assets/fotos/fotito-7.jpg',
+  ],
 
   /** Frases simpáticas cuando no acierta (se elige una al azar). */
   reaccionesError: [
@@ -184,7 +210,7 @@ export const HISTORIA = {
     texto:
       'Si llegaste hasta acá, quiero que sepas que cada momento que compartimos significa muchísimo para mí. ' +
       'Me encanta tenerte en mi vida, hacerte reír, abrazarte, cuidarte y seguir descubriendo todo lo lindo que nos espera. ' +
-      'Ya compartimos muchísimos momentos hermosos, pero tu príncipe todavía tiene una pregunta para su ratita…',
+      'Ya compartimos muchísimos momentos hermosos, pero todavía tengo una pregunta para vos, mi bebé, mi ratita bella, guapa y hermosa…',
     boton: 'Descubrir la última sorpresa',
   },
 

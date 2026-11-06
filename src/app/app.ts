@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { CorazonesFlotantes } from './componentes/corazones-flotantes';
+import { Fotitos } from './componentes/fotitos';
 import { Gatito } from './componentes/gatito';
 import { Ratita } from './componentes/ratita';
 import { GatitoService } from './gatito.service';
@@ -15,7 +16,7 @@ type Paso = 'acceso' | 'bienvenida' | 'pregunta' | 'mensaje' | 'contrato' | 'fir
 @Component({
   selector: 'app-root',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [PantallaAcceso, CorazonesFlotantes, Gatito, Ratita, PantallaPregunta, PantallaContrato, PantallaFirma, PantallaRecuerdo],
+  imports: [PantallaAcceso, Fotitos, CorazonesFlotantes, Gatito, Ratita, PantallaPregunta, PantallaContrato, PantallaFirma, PantallaRecuerdo],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })

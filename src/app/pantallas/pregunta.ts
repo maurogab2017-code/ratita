@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component, ElementRef, inject, input, output, signal, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, computed, inject, input, output, signal, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { gsap } from 'gsap';
 import { Escena } from '../componentes/escena';
+import { Fotitos } from '../componentes/fotitos';
 import { festejoChico } from '../festejo';
 import { GatitoService } from '../gatito.service';
 import { HISTORIA, Pregunta } from '../historia.config';
@@ -20,7 +21,7 @@ export function normalizar(texto: string): string {
 @Component({
   selector: 'app-pregunta',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [FormsModule, Escena],
+  imports: [FormsModule, Escena, Fotitos],
   template: `
     <div class="tarjeta" #tarjeta>
       @if (pregunta().antetitulo) {
@@ -51,6 +52,9 @@ export function normalizar(texto: string): string {
         <div class="acierto">
           <app-escena [ilustracion]="pregunta().ilustracion" [foto]="pregunta().foto" />
           <p class="mensaje">{{ pregunta().mensajeAcierto }}</p>
+          @if (fotito()) {
+            <app-fotitos [fotos]="[fotito()!]" />
+          }
           <button type="button" class="btn grande" (click)="siguiente.emit()">{{ ultima() ? 'Seguir ❤️' : 'Siguiente pregunta' }}</button>
         </div>
       }
@@ -88,6 +92,12 @@ export function normalizar(texto: string): string {
 export class PantallaPregunta {
   readonly pregunta = input.required<Pregunta>();
   readonly ultima = input(false);
+  /** Número de pregunta, para elegir qué fotito mostrar. */
+  readonly numero = input(0);
+  readonly fotito = computed(() => {
+    const f = HISTORIA.fotitos;
+    return f.length ? f[this.numero() % f.length] : null;
+  });
   readonly siguiente = output();
 
   readonly acerto = signal(false);
@@ -126,7 +136,7 @@ export class PantallaPregunta {
   }
 
   private incorrecto(opcion?: string) {
-    const frases = HISTORIA.reaccionesError;
+    const frases = this.pregunta().reaccionesError ?? HISTORIA.reaccionesError;
     let i = Math.floor(Math.random() * frases.length);
     if (i === this.ultimaReaccion) i = (i + 1) % frases.length;
     this.ultimaReaccion = i;
