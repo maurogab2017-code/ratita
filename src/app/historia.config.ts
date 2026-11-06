@@ -162,7 +162,7 @@ export const HISTORIA = {
         'Nooo, fuiste vos… ¡se te escapó! 🙊',
         'Mmm, no no. Haceme memoria… 😏',
       ],
-      mensajeAcierto: '¡Vos! Se te escapó y yo me derretí todo 🙊❤️',
+      mensajeAcierto: '¡Vos! Se te escapó a vos primero… pero después yo 🙊❤️',
       ilustracion: 'beso',
     },
     {
