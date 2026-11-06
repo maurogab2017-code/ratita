@@ -138,13 +138,13 @@ export const HISTORIA = {
     {
       id: 'persona-favorita',
       antetitulo: 'Capítulo 6 · Mi persona',
-      pregunta: '¿Quién es mi profe, mi vecina y mi persona favorita?',
+      pregunta: '¿Quién es mi profe, mi vecina y mi persona favorita de todas?',
       tipo: 'opciones',
-      opciones: ['No tengo 🤷', 'La rosa', 'Vos, obvio ❤️'],
+      opciones: ['El 10 de Belgrano', 'No tengo 🤷', 'Vos, obvio ❤️'],
       correctas: ['Vos, obvio ❤️'],
       reaccionesError: [
+        '¿El 10 de Belgrano? Lo quiero, pero no tanto 💙',
         '¿¿Cómo que no?? 😤 Pensalo bien…',
-        '¿La rosa? Nooo, pensalo de nuevo 🙈',
       ],
       mensajeAcierto: 'Vos: mi profe, mi vecina y mi persona favorita en todo el mundo, bebé hermosaaa 💜',
       foto: 'assets/fotos/06-persona-favorita.jpg',
