@@ -16,7 +16,7 @@ import { Firmado } from './firma';
 
       <div class="firmas">
         <div class="firma">
-          <span class="trazo texto">{{ el.nombre }}</span>
+          <img class="trazo" [src]="datos().firmaEl" alt="Firma de {{ el.nombre }}" />
           <span class="linea"></span>
           <span class="quien">{{ el.nombre }}<br /><small>{{ el.apodo }}</small></span>
         </div>

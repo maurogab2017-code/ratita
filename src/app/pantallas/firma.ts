@@ -7,6 +7,8 @@ import { HISTORIA } from '../historia.config';
 export interface Firmado {
   nombre: string;
   firma: string;
+  /** Firma dibujada de él. */
+  firmaEl: string;
   fecha: string;
 }
 
@@ -26,7 +28,7 @@ export interface Firmado {
       <section class="parte">
         <h3>Firma de {{ el.apodo }}</h3>
         <p class="nombre-el">{{ el.nombre }}</p>
-        <p class="firma-el" aria-hidden="true">{{ el.nombre }}</p>
+        <app-lienzo-firma ayuda="Firmá acá, {{ el.nombre }} ✍️" (cambio)="firmaEl.set($event)" />
       </section>
 
       <section class="parte">
@@ -37,8 +39,8 @@ export interface Firmado {
       </section>
 
       <p class="fecha">Fecha de aceptación: <strong>{{ fecha }}</strong></p>
-      @if (intento() && (!nombre.trim() || !firma())) {
-        <p class="falta">{{ !nombre.trim() ? 'Poné tu nombre, ratita 💜' : 'Falta tu firmita ✍️' }}</p>
+      @if (intento() && falta()) {
+        <p class="falta">{{ falta() }}</p>
       }
       <button type="submit" class="btn grande">{{ f.boton }}</button>
     </form>
@@ -71,6 +73,7 @@ export class PantallaFirma implements OnInit {
   readonly placeholderNombre = HISTORIA.ella.placeholderNombre;
   readonly fecha = new Date().toLocaleDateString('es-AR', { day: 'numeric', month: 'long', year: 'numeric' });
   readonly firma = signal<string | null>(null);
+  readonly firmaEl = signal<string | null>(null);
   readonly intento = signal(false);
   nombre = '';
 
@@ -78,10 +81,19 @@ export class PantallaFirma implements OnInit {
     this.nombre = this.nombreInicial();
   }
 
+  /** Qué falta para poder firmar (o null si está todo). */
+  falta(): string | null {
+    if (!this.firmaEl()) return 'Falta la firma de ' + this.el.nombre + ' ✍️';
+    if (!this.nombre.trim()) return 'Poné tu nombre, ratita 💜';
+    if (!this.firma()) return 'Falta tu firmita ✍️';
+    return null;
+  }
+
   firmar() {
     this.intento.set(true);
     const firma = this.firma();
-    if (!this.nombre.trim() || !firma) return;
-    this.firmado.emit({ nombre: this.nombre.trim(), firma, fecha: this.fecha });
+    const firmaEl = this.firmaEl();
+    if (this.falta() || !firma || !firmaEl) return;
+    this.firmado.emit({ nombre: this.nombre.trim(), firma, firmaEl, fecha: this.fecha });
   }
 }

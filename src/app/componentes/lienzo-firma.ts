@@ -5,6 +5,7 @@ import {
   ElementRef,
   afterNextRender,
   inject,
+  input,
   output,
   signal,
   viewChild,
@@ -21,7 +22,7 @@ type Punto = { x: number; y: number };
       <canvas #canvas aria-label="Lienzo para tu firma"
         (pointerdown)="empezar($event)" (pointermove)="mover($event)"
         (pointerup)="terminar($event)" (pointercancel)="terminar($event)"></canvas>
-      @if (vacio()) { <span class="ayuda">Firmá acá con el dedo ✍️</span> }
+      @if (vacio()) { <span class="ayuda">{{ ayuda() }}</span> }
       <span class="linea" aria-hidden="true"></span>
     </div>
     <button type="button" class="borrar" (click)="borrar()" [disabled]="vacio()">Borrar firma</button>
@@ -37,6 +38,7 @@ type Punto = { x: number; y: number };
   `,
 })
 export class LienzoFirma {
+  readonly ayuda = input('Firmá acá con el dedo ✍️');
   readonly cambio = output<string | null>();
   readonly vacio = signal(true);
 
@@ -83,7 +85,8 @@ export class LienzoFirma {
   mover(e: PointerEvent) {
     if (!this.actual) return;
     e.preventDefault();
-    const eventos = e.getCoalescedEvents?.() ?? [e];
+    const coalescidos = e.getCoalescedEvents?.() ?? [];
+    const eventos = coalescidos.length ? coalescidos : [e];
     for (const ev of eventos) this.actual.push(this.punto(ev));
     this.redibujar();
   }
