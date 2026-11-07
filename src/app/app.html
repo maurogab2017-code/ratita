@@ -61,5 +61,5 @@
   }
 </main>
 
-<app-gatito class="gatito-fijo" role="button" tabindex="0" aria-label="Miki, el gatito"
-  [mensaje]="gatito.mensaje()" [reaccion]="gatito.reaccion()" (click)="saludarMiki()" (keydown.enter)="saludarMiki()" />
+<app-gatito class="gatito-fijo" role="button" tabindex="0" aria-label="El gatito"
+  [class.visita]="gatito.visita()" [mensaje]="gatito.mensaje()" [reaccion]="gatito.reaccion()" (click)="saludarMiki()" (keydown.enter)="saludarMiki()" />

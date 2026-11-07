@@ -44,6 +44,12 @@ export interface Pregunta {
   ilustracion: Ilustracion;
   /** Frases propias cuando erra en esta pregunta (si no, se usan las generales). */
   reaccionesError?: string[];
+  /** Pistas que da Miki (en orden) cuando erra en una pregunta para escribir, o si pide una. */
+  pistas?: string[];
+  /** Si viene, Miki entra al medio de la pantalla y dice esto al empezar la pregunta. */
+  mikiEntra?: string;
+  /** Si es true, las opciones incorrectas se escapan cuando las quiere tocar. */
+  escapan?: boolean;
 }
 
 export const HISTORIA = {
@@ -70,7 +76,7 @@ export const HISTORIA = {
     errores: [
       'Mmm… vos no sos mi ratita 🐭',
       'Esto es solo para ella, perdón 🙈',
-      'Miki no te deja pasar 🐱',
+      'El gatito no te deja pasar 🐱',
     ],
   },
 
@@ -112,6 +118,7 @@ export const HISTORIA = {
       // Alcanza con que escriba alguna de estas (sin importar tildes ni mayúsculas).
       correctas: ['Lomito Caelia', 'Lomo Caelia', 'Lomito', 'Lomo', 'Caelia'],
       placeholder: 'Escribí su nombre…',
+      pistas: ['Empieza con "Lomo"… 🧸', 'Tiene apellido… empieza con C 😉', 'Lomito C-a-e-l-i-a 🙈'],
       mensajeAcierto: '¡Lomito Caelia! 🧸💜',
       foto: 'assets/fotos/03-osito.jpg',
       ilustracion: 'osito',
@@ -123,6 +130,7 @@ export const HISTORIA = {
       tipo: 'texto',
       correctas: ['Güemes'],
       placeholder: 'Escribilo acá…',
+      pistas: ['Es un barrio de Córdoba 🏘️', 'Empieza con G… 😏', 'G-ü-e-m-e-s 🙈'],
       mensajeAcierto: '¡Sisisisi! Güemes, nuestro lugar. Cada vuelta ahí con vos es especial ✨',
       foto: 'assets/fotos/04-guemes.jpg',
       ilustracion: 'abrazo',
@@ -131,6 +139,7 @@ export const HISTORIA = {
       id: 'foto-favorita',
       antetitulo: 'Capítulo 5 · Nuestras fotos',
       pregunta: '¿Cuál es mi foto favorita?',
+      mikiEntra: '¡Elegí bien, eh! 📸',
       tipo: 'fotos',
       opciones: [
         'assets/fotos/fotito-5.jpg',
@@ -154,6 +163,7 @@ export const HISTORIA = {
       id: 'te-amo-primero',
       antetitulo: 'Capítulo 7 · El primer te amo',
       pregunta: '¿Quién dijo "te amo" primero?',
+      mikiEntra: 'Yo sé la respuesta… 🤫',
       tipo: 'opciones',
       opciones: ['Vos', 'Yo', 'Los dos juntos'],
       correctas: ['Vos'],
@@ -177,12 +187,14 @@ export const HISTORIA = {
       id: 'cuanto-me-amas',
       antetitulo: 'Última pregunta',
       pregunta: '¿Cuánto me amás?',
+      mikiEntra: 'Te estoy mirando 👀',
+      escapan: true,
       tipo: 'opciones',
       opciones: ['Poco', 'Poquito', 'Mucho', 'Muchísimo'],
       correctas: ['Mucho', 'Muchísimo'],
       reaccionesError: [
         '¿¿POCO?? 😤 Elegí de nuevo, ratita',
-        '¿Poquito? Miki está anotando todo 🐱📝',
+        '¿Poquito? El gatito está anotando todo 🐱📝',
         'Mmm… esa respuesta no la acepto 🙅',
       ],
       mensajeAcierto: 'Yo te amo muchísimo más, mi bella ❤️',
@@ -210,7 +222,7 @@ export const HISTORIA = {
   /** Frases simpáticas cuando no acierta (se elige una al azar). */
   reaccionesError: [
     '¡Casi, ratita! Pensalo de nuevo 🙈',
-    'Mmm… Miki dice que no 🐱',
+    'Mmm… el gatito dice que no 🐱',
     'Esa no, pero te perdono con un besito 😘',
     '¡Uy! Probá otra vez, que vos sabés 💜',
     'Te doy otra chance porque sos vos 😌',
@@ -241,6 +253,15 @@ export const HISTORIA = {
     pregunta: '¿QUERÉS SER MI NOVIA? ❤️',
     botonSi: 'SÍ, QUIERO SER TU RATITA OFICIAL ❤️',
     botonBeso: 'SÍ, PERO QUIERO DARLE UN BESO A MI BEBÉ PRIMERO 😘',
+    /** Botón "No": se escapa cada vez que lo quiere tocar y al final desaparece. */
+    botonNo: 'No 🙈',
+    retosNo: [
+      '¡Esa opción no existe! 😼',
+      '¿¿Otra vez?? 🙀',
+      'Ni lo intentes, ratita 😾',
+      'Ya casi no queda botón 😹',
+      'Listo, el NO se fue para siempre 💜',
+    ],
   },
 
   firma: {

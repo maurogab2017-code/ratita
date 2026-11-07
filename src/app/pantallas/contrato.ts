@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component, output, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, inject, output, signal, viewChild } from '@angular/core';
 import { ContratoTexto } from '../componentes/contrato-texto';
 import { Escena } from '../componentes/escena';
 import { festejoGrande, lluviaDeBesos } from '../festejo';
+import { GatitoService } from '../gatito.service';
 import { HISTORIA } from '../historia.config';
 
 @Component({
@@ -11,9 +12,15 @@ import { HISTORIA } from '../historia.config';
   template: `
     @if (!besando()) {
       <h2 class="pregunta">{{ c.pregunta }}</h2>
-      <div class="botones">
+      <div class="botones" #botones>
         <button type="button" class="btn grande" (click)="si()">{{ c.botonSi }}</button>
         <button type="button" class="btn grande secundario" (click)="beso()">{{ c.botonBeso }}</button>
+        @if (intentosNo() < c.retosNo.length) {
+          <button type="button" class="no" [style.translate]="posNo().x + 'px ' + posNo().y + 'px'"
+            [style.scale]="1 - intentosNo() * 0.12" (pointerenter)="tentarNo($event)" (click)="escaparNo()">
+            {{ c.botonNo }}
+          </button>
+        }
       </div>
     } @else {
       <div class="besando">
@@ -34,6 +41,9 @@ import { HISTORIA } from '../historia.config';
       background: linear-gradient(90deg, var(--fucsia), var(--lila)); -webkit-background-clip: text; background-clip: text; color: transparent;
       animation: latir 1.6s ease-in-out infinite; }
     .botones { display: grid; gap: 12px; }
+    .no { justify-self: start; font: inherit; font-weight: 700; font-size: .95rem; color: var(--texto); cursor: pointer;
+      padding: 10px 20px; border-radius: 999px; background: rgba(255,255,255,.06); border: 1.5px solid rgba(199,125,255,.35);
+      transition: translate .3s cubic-bezier(.3,1.6,.5,1), scale .3s; }
     .besando { display: grid; justify-items: center; gap: 8px; }
     .muak { margin: 0; font-weight: 800; font-size: 1.2rem; color: var(--rosa); }
     @keyframes latir { 0%,100% { transform: scale(1); } 50% { transform: scale(1.05); } }
@@ -43,6 +53,12 @@ export class PantallaContrato {
   readonly acepto = output<'si' | 'beso'>();
   readonly c = HISTORIA.contrato;
   readonly besando = signal(false);
+  /** Cuántas veces intentó tocar "No" (se achica y al final desaparece). */
+  readonly intentosNo = signal(0);
+  readonly posNo = signal({ x: 0, y: 0 });
+
+  private readonly botones = viewChild<ElementRef<HTMLElement>>('botones');
+  private readonly gatito = inject(GatitoService);
 
   si() {
     festejoGrande();
@@ -56,5 +72,23 @@ export class PantallaContrato {
       festejoGrande();
       this.acepto.emit('beso');
     }, 2600);
+  }
+
+  /** En la compu, el "No" se escapa apenas le acerca el mouse. */
+  tentarNo(e: PointerEvent) {
+    if (e.pointerType === 'mouse') this.escaparNo();
+  }
+
+  /** El "No" salta a otro lado (cada vez más chiquito) y el gatito la reta. */
+  escaparNo() {
+    const ancho = this.botones()?.nativeElement.getBoundingClientRect().width ?? 300;
+    const libre = Math.max(0, ancho - 120);
+    const antes = this.posNo().x;
+    let x = Math.round(Math.random() * libre);
+    if (Math.abs(x - antes) < libre / 3) x = antes > libre / 2 ? Math.round(libre * 0.05) : Math.round(libre * 0.95);
+    this.posNo.set({ x, y: 0 });
+    const n = this.intentosNo();
+    this.gatito.entrar(this.c.retosNo[n], 'no', 2600);
+    this.intentosNo.set(n + 1);
   }
 }

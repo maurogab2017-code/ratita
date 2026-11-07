@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ElementRef, computed, inject, input, output, signal, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, ElementRef, computed, inject, input, output, signal, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { gsap } from 'gsap';
 import { Escena } from '../componentes/escena';
@@ -41,7 +41,9 @@ export function normalizar(texto: string): string {
         } @else if (pregunta().opciones && pregunta().tipo !== 'texto') {
           <div class="opciones" [class.muchas]="(pregunta().opciones?.length ?? 0) > 4">
             @for (op of pregunta().opciones; track op) {
-              <button type="button" class="opcion" [class.mal]="malas().includes(op)" (click)="elegir(op)">{{ op }}</button>
+              <button type="button" class="opcion" [class.mal]="malas().includes(op)" [class.huyendo]="!!huidas()[op]"
+                [style.translate]="huidas()[op] ? huidas()[op].x + 'px ' + huidas()[op].y + 'px' : null"
+                (pointerenter)="tentar(op, $event)" (click)="elegir(op)">{{ op }}</button>
             }
           </div>
         }
@@ -51,6 +53,9 @@ export function normalizar(texto: string): string {
             <input name="respuesta" [(ngModel)]="texto" [placeholder]="pregunta().placeholder ?? 'Tu respuesta…'"
               autocomplete="off" autocapitalize="sentences" enterkeyhint="send" />
             <button type="submit" class="btn" [disabled]="!texto.trim()">Responder</button>
+            @if (pregunta().pistas?.length) {
+              <button type="button" class="pista" (click)="darPista()">Pedile una pista al gatito 🐱</button>
+            }
           </form>
         }
         @if (reaccion()) {
@@ -90,6 +95,9 @@ export function normalizar(texto: string): string {
     .opcion:hover { background: rgba(255,46,147,.14); border-color: var(--fucsia); }
     .opcion:active { transform: scale(.97); }
     .opcion.mal { opacity: .45; border-style: dashed; }
+    .opcion { transition: translate .25s cubic-bezier(.3,1.6,.5,1), transform .15s, background .2s, border-color .2s; position: relative; z-index: 1; }
+    .opcion.huyendo { justify-self: start; padding: 10px 16px; }
+    .pista { justify-self: center; font: inherit; font-size: .9rem; font-weight: 700; color: var(--lila); background: none; border: 0; text-decoration: underline; cursor: pointer; padding: 6px; }
     .escribir { display: grid; gap: 10px; margin-top: 16px; }
     .o { font-size: .85rem; color: var(--lila); text-align: center; }
     input {
@@ -124,12 +132,59 @@ export class PantallaPregunta {
   private readonly tarjeta = viewChild.required<ElementRef<HTMLElement>>('tarjeta');
   private readonly gatito = inject(GatitoService);
   private ultimaReaccion = -1;
+  private pistaActual = 0;
+  private huyo = false;
+  /** Cuánto se corrió cada opción que se escapa. */
+  readonly huidas = signal<Record<string, { x: number; y: number }>>({});
+
+  constructor() {
+    // Miki entra a algunas pantallas a decir algo.
+    const t = setTimeout(() => {
+      const msg = this.pregunta().mikiEntra;
+      if (msg) this.gatito.entrar(msg, 'feliz', 3200);
+    }, 900);
+    inject(DestroyRef).onDestroy(() => clearTimeout(t));
+  }
+
+  private esIncorrecta(opcion: string) {
+    return !(this.pregunta().correctas ?? []).some((c) => normalizar(c) === normalizar(opcion));
+  }
+
+  /** En la compu, la opción incorrecta se escapa apenas le pasa el mouse por encima. */
+  tentar(opcion: string, e: PointerEvent) {
+    if (e.pointerType === 'mouse' && this.pregunta().escapan && this.esIncorrecta(opcion)) this.huir(opcion);
+  }
+
+  /** Corre la opción a otro lado y Miki la reta. */
+  private huir(opcion: string) {
+    // Se corre a un lugar al azar dentro del ancho de las opciones, sin salirse de la tarjeta.
+    const caja = this.tarjeta().nativeElement.querySelector('.opciones')?.getBoundingClientRect();
+    const libre = Math.max(0, (caja?.width ?? 280) - 110);
+    let x = Math.round(Math.random() * libre);
+    const anterior = this.huidas()[opcion]?.x;
+    if (anterior !== undefined && Math.abs(anterior - x) < libre / 3) x = anterior > libre / 2 ? Math.round(libre * 0.1) : Math.round(libre * 0.9);
+    const y = 0;
+    this.huidas.update((h) => ({ ...h, [opcion]: { x, y } }));
+    const retos = ['¡Eso no se elige! Elegí MUCHO 😼', '¡Ni lo intentes! 🙀', 'Solo vale mucho o muchísimo 😾'];
+    this.gatito.entrar(this.huyo ? retos[1 + Math.floor(Math.random() * 2)] : retos[0], 'no', 2600);
+    this.huyo = true;
+  }
+
+  /** Miki entra y da la siguiente pista. */
+  darPista() {
+    const pistas = this.pregunta().pistas ?? [];
+    if (!pistas.length) return;
+    const pista = pistas[Math.min(this.pistaActual, pistas.length - 1)];
+    this.pistaActual++;
+    this.gatito.entrar('Pista: ' + pista, 'feliz', 4500);
+  }
 
   elegir(opcion: string) {
     const p = this.pregunta();
     if (p.tipo === 'fotos') this.elegida.set(opcion);
     if (p.tipo === 'todas-correctas' || p.tipo === 'fotos') return this.correcto();
-    const ok = (p.correctas ?? []).some((c) => normalizar(c) === normalizar(opcion));
+    if (p.escapan && this.esIncorrecta(opcion)) return this.huir(opcion);
+    const ok = !this.esIncorrecta(opcion);
     if (ok) this.correcto();
     else this.incorrecto(opcion);
   }
@@ -160,7 +215,8 @@ export class PantallaPregunta {
     this.ultimaReaccion = i;
     this.reaccion.set(frases[i]);
     if (opcion) this.malas.update((m) => [...m, opcion]);
-    this.gatito.decir('Nop 🙈', 'no');
+    if (!opcion && this.pregunta().pistas?.length) this.darPista();
+    else this.gatito.decir('Nop 🙈', 'no');
     if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
       gsap.fromTo(this.tarjeta().nativeElement, { x: 0 }, { x: 8, duration: 0.07, repeat: 5, yoyo: true, ease: 'sine.inOut', clearProps: 'x' });
     }

@@ -52,6 +52,12 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
       animation: aparecer .3s ease-out;
     }
     .burbuja::after { content: ''; position: absolute; top: 100%; right: 22px; border: 6px solid transparent; border-top-color: #fff; }
+    /* De visita en el medio: la burbuja queda centrada y puede ocupar dos líneas */
+    :host(.visita) .burbuja { right: 50%; translate: 50% 0; white-space: normal; width: max-content; max-width: 130px;
+      text-align: center; font-size: .62rem; line-height: 1.3; padding: 5px 8px; }
+    :host(.visita) .burbuja::after { right: calc(50% - 6px); }
+    :host(.visita) svg { animation: caminar .35s ease-in-out 3; }
+    @keyframes caminar { 0%,100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-4px) rotate(-4deg); } }
     @keyframes cola { from { transform: rotate(-10deg); } to { transform: rotate(14deg); } }
     @keyframes parpadeo { 0%, 94%, 100% { transform: scaleY(1); } 97% { transform: scaleY(.1); } }
     @keyframes no { 0%,100% { transform: rotate(0); } 25% { transform: rotate(-12deg); } 75% { transform: rotate(12deg); } }
