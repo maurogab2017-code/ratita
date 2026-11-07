@@ -239,7 +239,7 @@ export const HISTORIA = {
 
   /** Pausa con suspenso antes del contrato (frases que aparecen de a una + cuenta 3, 2, 1). */
   suspenso: {
-    lineas: ['Ahora sí…', 'Respirá hondo 🫣', 'Lo que viene es muy importante…'],
+    lineas: ['Ahora siii……'],
   },
 
   contrato: {
