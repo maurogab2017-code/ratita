@@ -48,13 +48,9 @@ export class App {
     return Array.from({ length: total }, (_, k) => k < hechas);
   });
 
-  constructor() {
-    // Miki saluda apenas abre la página.
-    setTimeout(() => this.saludarMiki(), 1200);
-  }
-
   saludarMiki() {
-    this.gatito.decir('¡Hola, soy Miki! 🐾', 'feliz', 3000);
+    const nombre = this.nombreElla();
+    this.gatito.decir(nombre ? '¡Hola, ' + nombre + '! 💜' : '¡Hola! 🐾', 'feliz', 3000);
   }
 
   readonly mensajeLineas = this.h.mensajeFinal.texto.split(/(?<=\.)\s+/);
@@ -82,6 +78,7 @@ export class App {
   entrar(nombre: string) {
     this.nombreElla.set(nombre);
     this.ir('bienvenida');
+    this.saludarMiki();
   }
 
   aceptar(como: 'si' | 'beso') {

@@ -55,7 +55,6 @@ export class PantallaAcceso {
     const validos = this.a.nombresValidos.map(normalizar);
     const primera = n.split(' ')[0];
     if (validos.includes(n) || validos.includes(primera)) {
-      this.gatito.decir('¡Hola, ratita! 💜', 'feliz', 1800);
       this.entro.emit(this.nombre.trim());
       return;
     }
