@@ -9,12 +9,6 @@ import { HISTORIA } from '../historia.config';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [ContratoTexto, Escena],
   template: `
-    <article class="cartulina">
-      <span class="esquina e1">♥</span><span class="esquina e2">♥</span>
-      <span class="esquina e3">♥</span><span class="esquina e4">♥</span>
-      <app-contrato-texto [titulo]="c.tituloPropuesta" />
-    </article>
-
     @if (!besando()) {
       <h2 class="pregunta">{{ c.pregunta }}</h2>
       <div class="botones">
@@ -27,6 +21,12 @@ import { HISTORIA } from '../historia.config';
         <p class="muak">¡Muuuak! 😘 Beso recibido y firmado.</p>
       </div>
     }
+
+    <article class="cartulina">
+      <span class="esquina e1">♥</span><span class="esquina e2">♥</span>
+      <span class="esquina e3">♥</span><span class="esquina e4">♥</span>
+      <app-contrato-texto [titulo]="c.tituloPropuesta" />
+    </article>
   `,
   styles: `
     :host { display: grid; gap: 22px; width: 100%; }

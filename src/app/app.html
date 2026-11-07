@@ -39,8 +39,11 @@
             }
             <app-fotitos class="fotitos-final linea" [style.animation-delay.s]="0.4 + mensajeLineas.length * 0.9" [fotos]="h.fotitos" />
             <button type="button" class="btn grande linea" [style.animation-delay.s]="0.8 + mensajeLineas.length * 0.9"
-              (click)="ir('contrato')">{{ h.mensajeFinal.boton }} 🎁</button>
+              (click)="ir('suspenso')">{{ h.mensajeFinal.boton }} 🎁</button>
           </div>
+        }
+        @case ('suspenso') {
+          <app-suspenso (listo)="ir('contrato')" />
         }
         @case ('contrato') {
           <app-contrato (acepto)="aceptar($event)" />
@@ -58,4 +61,5 @@
   }
 </main>
 
-<app-gatito class="gatito-fijo" [mensaje]="gatito.mensaje()" [reaccion]="gatito.reaccion()" />
+<app-gatito class="gatito-fijo" role="button" tabindex="0" aria-label="Miki, el gatito"
+  [mensaje]="gatito.mensaje()" [reaccion]="gatito.reaccion()" (click)="saludarMiki()" (keydown.enter)="saludarMiki()" />

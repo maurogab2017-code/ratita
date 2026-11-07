@@ -11,13 +11,14 @@ import { PantallaContrato } from './pantallas/contrato';
 import { Firmado, PantallaFirma } from './pantallas/firma';
 import { PantallaPregunta } from './pantallas/pregunta';
 import { PantallaRecuerdo } from './pantallas/recuerdo';
+import { PantallaSuspenso } from './pantallas/suspenso';
 
-type Paso = 'acceso' | 'bienvenida' | 'pregunta' | 'mensaje' | 'contrato' | 'firma' | 'recuerdo';
+type Paso = 'acceso' | 'bienvenida' | 'pregunta' | 'mensaje' | 'suspenso' | 'contrato' | 'firma' | 'recuerdo';
 
 @Component({
   selector: 'app-root',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [PantallaAcceso, Fotitos, CorazonesFlotantes, Gatito, Ratita, PantallaPregunta, PantallaContrato, PantallaFirma, PantallaRecuerdo],
+  imports: [PantallaAcceso, Fotitos, CorazonesFlotantes, Gatito, Ratita, PantallaPregunta, PantallaContrato, PantallaFirma, PantallaRecuerdo, PantallaSuspenso],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
@@ -46,6 +47,15 @@ export class App {
     const hechas = paso === 'pregunta' ? this.indice() : total;
     return Array.from({ length: total }, (_, k) => k < hechas);
   });
+
+  constructor() {
+    // Miki saluda apenas abre la página.
+    setTimeout(() => this.saludarMiki(), 1200);
+  }
+
+  saludarMiki() {
+    this.gatito.decir('¡Hola, soy Miki! 🐾', 'feliz', 3000);
+  }
 
   readonly mensajeLineas = this.h.mensajeFinal.texto.split(/(?<=\.)\s+/);
 

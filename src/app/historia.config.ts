@@ -70,7 +70,7 @@ export const HISTORIA = {
     errores: [
       'Mmm… vos no sos mi ratita 🐭',
       'Esto es solo para ella, perdón 🙈',
-      'El gatito no te deja pasar 🐱',
+      'Miki no te deja pasar 🐱',
     ],
   },
 
@@ -108,12 +108,11 @@ export const HISTORIA = {
       id: 'osito',
       antetitulo: 'Capítulo 3 · El tercero en la relación',
       pregunta: '¿Cómo se llama nuestro osito?',
-      tipo: 'opciones-o-texto',
-      opciones: ['Pochoclo', 'Lomito Caelia', 'Algodón'],
+      tipo: 'texto',
       // Alcanza con que escriba alguna de estas (sin importar tildes ni mayúsculas).
       correctas: ['Lomito Caelia', 'Lomo Caelia', 'Lomito', 'Lomo', 'Caelia'],
       placeholder: 'Escribí su nombre…',
-      mensajeAcierto: '¡Lomito Caelia! El oso más lindo de todos después de Miki 🧸',
+      mensajeAcierto: '¡Lomito Caelia! 🧸💜',
       foto: 'assets/fotos/03-osito.jpg',
       ilustracion: 'osito',
     },
@@ -147,7 +146,7 @@ export const HISTORIA = {
       antetitulo: 'Capítulo 6 · Cosas nuestras',
       pregunta: '¿Cómo me gusta que me digas?',
       tipo: 'todas-correctas',
-      opciones: ['Hermoso', 'Guapo', 'Corazoncito', 'Bello', 'Bebé'],
+      opciones: ['Hermoso', 'Guapo', 'Corazoncito', 'Bello', 'Bebé', 'Amor'],
       mensajeAcierto: '¡Todas son correctas! Viniendo de vos, todo me gustaaa 🥰',
       ilustracion: 'ratita',
     },
@@ -166,23 +165,8 @@ export const HISTORIA = {
       ilustracion: 'beso',
     },
     {
-      id: 'persona-favorita',
-      antetitulo: 'Capítulo 8 · Mi persona',
-      pregunta: '¿Quién es mi profe, mi vecina y mi persona favorita de todas?',
-      tipo: 'opciones',
-      opciones: ['El 10 de Belgrano', 'No tengo 🤷', 'Vos, obvio ❤️'],
-      correctas: ['Vos, obvio ❤️'],
-      reaccionesError: [
-        '¿El 10 de Belgrano? Lo quiero, pero no tanto 💙',
-        '¿¿Cómo que no?? 😤 Pensalo bien…',
-      ],
-      mensajeAcierto: 'Vos: mi profe, mi vecina y mi persona favorita en todo el mundo, bebé hermosaaa 💜',
-      foto: 'assets/fotos/06-persona-favorita.jpg',
-      ilustracion: 'abrazo',
-    },
-    {
       id: 'lo-que-mas-me-gusta',
-      antetitulo: 'Capítulo 9 · Lo que más me gusta',
+      antetitulo: 'Capítulo 8 · Lo que más me gusta',
       pregunta: '¿Qué es lo que más me gusta de vos?',
       tipo: 'todas-correctas',
       opciones: ['Tu sonrisa', 'Tus ojos', 'Tu forma de ser tan tierna', 'Tu nariz', 'Cómo me hacés sentir'],
@@ -198,7 +182,7 @@ export const HISTORIA = {
       correctas: ['Mucho', 'Muchísimo'],
       reaccionesError: [
         '¿¿POCO?? 😤 Elegí de nuevo, ratita',
-        '¿Poquito? El gatito está anotando todo 🐱📝',
+        '¿Poquito? Miki está anotando todo 🐱📝',
         'Mmm… esa respuesta no la acepto 🙅',
       ],
       mensajeAcierto: 'Yo te amo muchísimo más, mi bella ❤️',
@@ -223,7 +207,7 @@ export const HISTORIA = {
   /** Frases simpáticas cuando no acierta (se elige una al azar). */
   reaccionesError: [
     '¡Casi, ratita! Pensalo de nuevo 🙈',
-    'Mmm… el gatito dice que no 🐱',
+    'Mmm… Miki dice que no 🐱',
     'Esa no, pero te perdono con un besito 😘',
     '¡Uy! Probá otra vez, que vos sabés 💜',
     'Te doy otra chance porque sos vos 😌',
@@ -234,8 +218,13 @@ export const HISTORIA = {
     texto:
       'Si llegaste hasta acá, quiero que sepas que cada momento que compartimos significa muchísimo para mí. ' +
       'Me encanta tenerte en mi vida, hacerte reír, abrazarte, cuidarte y seguir descubriendo todo lo lindo que nos espera. ' +
-      'Ya compartimos muchísimos momentos hermosos, pero todavía tengo una pregunta para vos, mi bebé, mi ratita bella, guapa y hermosa…',
+      'Ya compartimos muchos momentos hermosos, pero todavía tengo una pregunta para vos, mi bebé, mi ratita bella, guapa y hermosa…',
     boton: 'Descubrir la última sorpresa',
+  },
+
+  /** Pausa con suspenso antes del contrato (frases que aparecen de a una + cuenta 3, 2, 1). */
+  suspenso: {
+    lineas: ['Ahora sí…', 'Respirá hondo 🫣', 'Lo que viene es muy importante…'],
   },
 
   contrato: {
