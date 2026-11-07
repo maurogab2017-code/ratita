@@ -101,7 +101,7 @@ export const HISTORIA = {
       tipo: 'opciones',
       opciones: ['En el cine', 'En la calle', 'En Boticario', 'En la Sabattini'],
       correctas: ['En Boticario'],
-      mensajeAcierto: 'En Boticario… y desde ese beso no te pude sacar más de mi cabeza 😘',
+      mensajeAcierto: '¡Sisisisisisi! En Boticario… y desde ese beso no te pude sacar más de mi cabeza 😘',
       ilustracion: 'beso',
     },
     {
@@ -123,7 +123,7 @@ export const HISTORIA = {
       tipo: 'texto',
       correctas: ['Güemes'],
       placeholder: 'Escribilo acá…',
-      mensajeAcierto: 'Güemes, nuestro lugar. Cada vuelta ahí con vos es especial ✨',
+      mensajeAcierto: '¡Sisisisi! Güemes, nuestro lugar. Cada vuelta ahí con vos es especial ✨',
       foto: 'assets/fotos/04-guemes.jpg',
       ilustracion: 'abrazo',
     },
@@ -203,6 +203,9 @@ export const HISTORIA = {
     'assets/fotos/fotito-6.jpg',
     'assets/fotos/fotito-7.jpg',
   ],
+
+  /** Lo que dice Miki cuando acierta (se elige una al azar). */
+  reaccionesAcierto: ['¡Sisisisisisi! 💜', '¡Sisisisi! 🥰', '¡Sisisisisisisisi! 🐾', '¡Bieeen! 💜'],
 
   /** Frases simpáticas cuando no acierta (se elige una al azar). */
   reaccionesError: [

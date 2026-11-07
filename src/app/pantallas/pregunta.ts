@@ -149,7 +149,8 @@ export class PantallaPregunta {
     this.reaccion.set(null);
     this.acerto.set(true);
     festejoChico();
-    this.gatito.decir('¡Bieeen! 💜', 'feliz', 1800);
+    const frases = HISTORIA.reaccionesAcierto;
+    this.gatito.decir(frases[Math.floor(Math.random() * frases.length)], 'feliz', 2000);
   }
 
   private incorrecto(opcion?: string) {
