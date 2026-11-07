@@ -147,7 +147,7 @@ export const HISTORIA = {
       pregunta: '¿Cómo me gusta que me digas?',
       tipo: 'todas-correctas',
       opciones: ['Hermoso', 'Guapo', 'Corazoncito', 'Bello', 'Bebé', 'Amor'],
-      mensajeAcierto: '¡Todas son correctas! Viniendo de vos, todo me gustaaa 🥰',
+      mensajeAcierto: '¡Todas son correctas si vienen de tuu! 🥰',
       ilustracion: 'ratita',
     },
     {
