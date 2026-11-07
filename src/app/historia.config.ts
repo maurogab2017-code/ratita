@@ -233,7 +233,7 @@ export const HISTORIA = {
     texto:
       'Si llegaste hasta acá, quiero que sepas que cada momento que compartimos significa muchísimo para mí. ' +
       'Me encanta tenerte en mi vida, hacerte reír, abrazarte, cuidarte y seguir descubriendo todo lo lindo que nos espera. ' +
-      'Ya compartimos muchos momentos hermosos, pero todavía tengo una pregunta para vos, mi bebé, mi ratita bella, guapa y hermosa…',
+      'Ya compartimos muchos momentos hermosos, pero todavía tengo una pregunta para ti…',
     boton: 'Descubrir la última sorpresa',
   },
 
