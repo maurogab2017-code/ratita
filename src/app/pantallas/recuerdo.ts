@@ -29,7 +29,6 @@ import { Firmado } from './firma';
       </div>
 
       <p class="fecha">Firmado el {{ datos().fecha }}</p>
-      <p class="firmado">{{ r.firmado }}</p>
       <div class="sello" aria-hidden="true">ACEPTADO<br />❤</div>
       <p class="aclaracion">{{ r.aclaracion }}</p>
     </article>
@@ -55,7 +54,6 @@ import { Firmado } from './firma';
     .quien { font-weight: 700; font-size: .92rem; line-height: 1.25; }
     .quien small { font-weight: 400; color: #9d4edd; }
     .fecha { margin: 16px 0 4px; text-align: center; font-weight: 700; }
-    .firmado { margin: 0; text-align: center; font-style: italic; font-size: .95rem; }
     .sello { position: absolute; right: 12px; top: 12px; width: 64px; height: 64px; background: #fdeaf4; border-radius: 50%;
       border: 3px double #d6249f; color: #d6249f; display: grid; place-content: center; text-align: center;
       font-weight: 800; font-size: .62rem; letter-spacing: .08em; transform: rotate(-16deg); opacity: .75; line-height: 1.3; }

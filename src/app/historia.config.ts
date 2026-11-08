@@ -81,7 +81,7 @@ export const HISTORIA = {
   },
 
   bienvenida: {
-    saludo: 'Hola, mi ratita bella, guapa y hermosa ❤️',
+    saludo: 'Hola, mi ratita bella ❤️',
     subtitulo: 'Tu ratita te preparó algo muy especial.',
     pregunta: '¿A ver cuánto te acordás de lo nuestro?',
     boton: 'Empezar nuestra historia',
@@ -179,7 +179,7 @@ export const HISTORIA = {
       antetitulo: 'Capítulo 8 · Lo que más me gusta',
       pregunta: '¿Qué es lo que más me gusta de vos?',
       tipo: 'todas-correctas',
-      opciones: ['Tu sonrisa', 'Tus ojos', 'Tu forma de ser tan tierna', 'Tu nariz', 'Cómo me hacés sentir'],
+      opciones: ['Tu sonrisa', 'Tus ojos', 'Tus mimos', 'Tus abrazos', 'Tu forma de ser tan tierna', 'Tu nariz', 'Cómo me hacés sentir'],
       mensajeAcierto: 'Todas valen… pero la respuesta correcta es TODO 💜',
       ilustracion: 'abrazo',
     },
@@ -272,7 +272,6 @@ export const HISTORIA = {
 
   recuerdo: {
     mensaje: 'Desde hoy, oficialmente, mi ratita es mi novia. ❤️',
-    firmado: 'Firmado: su bebé y su ratita bella, guapa y hermosa.',
     aclaracion: 'Este contrato no se puede romper nunca 💜',
     botonDescargar: 'Descargar recuerdo',
   },
