@@ -9,6 +9,8 @@ export interface Firmado {
   firma: string;
   /** Firma dibujada de él. */
   firmaEl: string;
+  /** Selfie opcional de ella (JPG chiquito, solo en su teléfono). */
+  selfie?: string;
   fecha: string;
 }
 
@@ -38,6 +40,20 @@ export interface Firmado {
         <app-lienzo-firma (cambio)="firma.set($event)" />
       </section>
 
+      <section class="parte selfie">
+        <h3>Selfie para el contrato oficial 📸</h3>
+        <input #camara class="oculto" type="file" accept="image/*" capture="user" (change)="cargarSelfie($event)" />
+        @if (selfie()) {
+          <div class="fila">
+            <figure class="polaroid"><img [src]="selfie()" alt="Tu selfie" /></figure>
+            <button type="button" class="link" (click)="camara.click()">Sacar otra</button>
+          </div>
+        } @else {
+          <button type="button" class="btn secundario-claro" (click)="camara.click()">Sacate una selfie 📸</button>
+          <small class="opcional">Es opcional y la foto queda solo en tu celu 💜</small>
+        }
+      </section>
+
       <p class="fecha">Fecha de aceptación: <strong>{{ fecha }}</strong></p>
       @if (intento() && falta()) {
         <p class="falta">{{ falta() }}</p>
@@ -60,6 +76,14 @@ export interface Firmado {
     input { font: inherit; font-size: 1.05rem; padding: 12px 14px; border-radius: 14px; border: 1.5px solid #e0a6cf; background: #fff; color: #3a1450; outline: none; }
     input:focus { border-color: #d6249f; box-shadow: 0 0 0 4px rgba(214,36,159,.15); }
     .fecha { margin: 0; text-align: center; }
+    .oculto { display: none; }
+    .selfie { justify-items: start; }
+    .fila { display: flex; align-items: center; gap: 16px; }
+    .polaroid { margin: 0; padding: 4px 4px 14px; background: #fff; border-radius: 3px; width: 84px; transform: rotate(-5deg); box-shadow: 0 6px 16px rgba(58,20,80,.25); }
+    .polaroid img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 2px; }
+    .secundario-claro { background: #fff; color: #b5177f; border: 2px solid #f2a7d0; box-shadow: none; }
+    .opcional { color: #8a6b97; }
+    .link { font: inherit; background: none; border: 0; color: #9d4edd; text-decoration: underline; cursor: pointer; padding: 4px; }
     .falta { margin: 0; text-align: center; color: #d6249f; font-weight: 700; }
   `,
 })
@@ -75,6 +99,7 @@ export class PantallaFirma implements OnInit {
   readonly firma = signal<string | null>(null);
   readonly firmaEl = signal<string | null>(null);
   readonly intento = signal(false);
+  readonly selfie = signal<string | null>(null);
   nombre = '';
 
   ngOnInit() {
@@ -89,11 +114,29 @@ export class PantallaFirma implements OnInit {
     return null;
   }
 
+  /** Recorta la foto en cuadrado y la achica (para que la imagen final no pese una tonelada). */
+  cargarSelfie(e: Event) {
+    const archivo = (e.target as HTMLInputElement).files?.[0];
+    if (!archivo) return;
+    const img = new Image();
+    const url = URL.createObjectURL(archivo);
+    img.onload = () => {
+      const lado = Math.min(img.naturalWidth, img.naturalHeight);
+      const c = document.createElement('canvas');
+      c.width = c.height = 360;
+      c.getContext('2d')!.drawImage(img, (img.naturalWidth - lado) / 2, (img.naturalHeight - lado) / 2, lado, lado, 0, 0, 360, 360);
+      this.selfie.set(c.toDataURL('image/jpeg', 0.85));
+      URL.revokeObjectURL(url);
+    };
+    img.src = url;
+    (e.target as HTMLInputElement).value = '';
+  }
+
   firmar() {
     this.intento.set(true);
     const firma = this.firma();
     const firmaEl = this.firmaEl();
     if (this.falta() || !firma || !firmaEl) return;
-    this.firmado.emit({ nombre: this.nombre.trim(), firma, firmaEl, fecha: this.fecha });
+    this.firmado.emit({ nombre: this.nombre.trim(), firma, firmaEl, selfie: this.selfie() ?? undefined, fecha: this.fecha });
   }
 }

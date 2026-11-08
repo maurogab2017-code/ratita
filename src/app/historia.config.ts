@@ -58,6 +58,11 @@ export const HISTORIA = {
     nombre: 'Mauro',
     /** Cómo aparecés en la firma ("Firma de su ratita"). */
     apodo: 'su ratita',
+    /**
+     * Tu número de WhatsApp con código de país y sin + ni espacios (ej. 5493511234567).
+     * Solo se usa si el celu de ella no puede compartir la imagen directo; vacío = elige el contacto ella.
+     */
+    whatsapp: '',
   },
 
   /** Lo que se le sugiere a ella en el campo de nombre (puede escribir lo que quiera). */
@@ -274,5 +279,7 @@ export const HISTORIA = {
     mensaje: 'Desde hoy, oficialmente, mi ratita es mi novia. ❤️',
     aclaracion: 'Este contrato no se puede romper nunca 💜',
     botonDescargar: 'Descargar recuerdo',
+    botonMandar: 'Mandáselo a tu bebé 📲',
+    textoMandar: '¡Ya firmé nuestro contrato! Ahora sí, oficialmente tu ratita 💜',
   },
 };

@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component, ElementRef, input, output, signal, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, ElementRef, afterNextRender, inject, input, output, signal, viewChild } from '@angular/core';
 import { ContratoTexto } from '../componentes/contrato-texto';
+import { Soplar } from '../componentes/soplar';
 import { lluviaDeAmor } from '../festejo';
 import { HISTORIA } from '../historia.config';
 import { Firmado } from './firma';
@@ -7,7 +8,7 @@ import { Firmado } from './firma';
 @Component({
   selector: 'app-recuerdo',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ContratoTexto],
+  imports: [ContratoTexto, Soplar],
   template: `
     <article class="documento cartulina" #doc>
       <span class="esquina e1">♥</span><span class="esquina e2">♥</span>
@@ -30,15 +31,27 @@ import { Firmado } from './firma';
 
       <p class="fecha">Firmado el {{ datos().fecha }}</p>
       <div class="sello" aria-hidden="true">ACEPTADO<br />❤</div>
+      @if (datos().selfie) {
+        <figure class="selfie"><img [src]="datos().selfie" alt="Selfie de {{ datos().nombre }}" /></figure>
+      }
       <p class="aclaracion">{{ r.aclaracion }}</p>
     </article>
 
     <div class="acciones">
-      <button type="button" class="btn grande" (click)="descargar()" [disabled]="descargando()">
+      <button type="button" class="btn grande" (click)="mandar()" [disabled]="mandando()">
+        {{ mandando() ? 'Preparando…' : r.botonMandar }}
+      </button>
+      <button type="button" class="btn grande secundario" (click)="descargar()" [disabled]="descargando()">
         {{ descargando() ? 'Preparando…' : r.botonDescargar + ' 📸' }}
       </button>
       @if (error()) { <p class="error">{{ error() }}</p> }
       <button type="button" class="btn grande secundario" (click)="masAmor()">Tirar más amor 🐭🐱🧸💖</button>
+      @if (sacudir() === 'activo') {
+        <p class="pista">📳 Sacudí el celu para que lluevan ratitas</p>
+      } @else if (sacudir() === 'pedir') {
+        <button type="button" class="link" (click)="activarSacudida()">📳 Activar: sacudí el celu y llueven ratitas</button>
+      }
+      <app-soplar />
       <button type="button" class="link" (click)="reiniciar.emit()">Volver a vivir la historia</button>
     </div>
   `,
@@ -57,9 +70,13 @@ import { Firmado } from './firma';
     .sello { position: absolute; right: 12px; top: 12px; width: 64px; height: 64px; background: #fdeaf4; border-radius: 50%;
       border: 3px double #d6249f; color: #d6249f; display: grid; place-content: center; text-align: center;
       font-weight: 800; font-size: .62rem; letter-spacing: .08em; transform: rotate(-16deg); opacity: .75; line-height: 1.3; }
+    .selfie { position: absolute; left: 14px; top: 14px; margin: 0; padding: 3px 3px 11px; background: #fff; border-radius: 2px; width: 62px;
+      transform: rotate(-8deg); box-shadow: 0 4px 10px rgba(58,20,80,.25); }
+    .selfie img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; }
     .aclaracion { margin: 16px 0 0; text-align: center; font-size: .68rem; color: #8a6b97; }
     .acciones { display: grid; gap: 10px; justify-items: center; }
     .error { margin: 0; color: var(--rosa); font-size: .9rem; text-align: center; }
+    .pista { margin: 0; font-size: .9rem; color: var(--lila); text-align: center; }
     .link { font: inherit; background: none; border: 0; color: var(--lila); text-decoration: underline; cursor: pointer; }
   `,
 })
@@ -70,6 +87,102 @@ export class PantallaRecuerdo {
   readonly el = HISTORIA.el;
   readonly descargando = signal(false);
   readonly error = signal<string | null>(null);
+  readonly mandando = signal(false);
+  /** Sacudida: 'activo' (ya escucha), 'pedir' (iPhone: hay que tocar para dar permiso) o 'no' (compu / no soportado). */
+  readonly sacudir = signal<'activo' | 'pedir' | 'no'>('no');
+  private png?: Promise<string>;
+  private ultimaSacudida = 0;
+  private readonly alMover = (e: DeviceMotionEvent) => {
+    const a = e.accelerationIncludingGravity;
+    if (!a || a.x == null || a.y == null || a.z == null) return;
+    const fuerza = Math.abs(Math.hypot(a.x, a.y, a.z) - 9.8);
+    const ahora = Date.now();
+    if (fuerza > 12 && ahora - this.ultimaSacudida > 2500) {
+      this.ultimaSacudida = ahora;
+      lluviaDeAmor(2500);
+    }
+  };
+
+  constructor() {
+    inject(DestroyRef).onDestroy(() => window.removeEventListener('devicemotion', this.alMover));
+    const esCelu = matchMedia('(pointer: coarse)').matches;
+    if (esCelu && 'DeviceMotionEvent' in window) {
+      const pedir = (DeviceMotionEvent as unknown as { requestPermission?: () => Promise<string> }).requestPermission;
+      if (typeof pedir === 'function') this.sacudir.set('pedir');
+      else this.escucharSacudida();
+    }
+    // Preparamos la imagen de antemano: así al tocar "Mandáselo" el celu comparte al toque
+    // (en iPhone, si pasa mucho tiempo entre el toque y compartir, no deja).
+    afterNextRender(() => setTimeout(() => (this.png = this.generar().catch(() => (this.png = undefined, ''))), 1500));
+  }
+
+  private escucharSacudida() {
+    window.addEventListener('devicemotion', this.alMover);
+    this.sacudir.set('activo');
+  }
+
+  async activarSacudida() {
+    try {
+      const pedir = (DeviceMotionEvent as unknown as { requestPermission: () => Promise<string> }).requestPermission;
+      const r = await pedir();
+      if (r === 'granted') this.escucharSacudida();
+      else this.sacudir.set('no');
+    } catch {
+      this.sacudir.set('no');
+    }
+  }
+
+  /** Genera el PNG del contrato firmado. */
+  private async generar(): Promise<string> {
+    const { toPng } = await import('html-to-image');
+    const nodo = this.doc().nativeElement;
+    // la primera pasada a veces sale sin fuentes en Safari; la segunda ya las tiene
+    await toPng(nodo, { pixelRatio: 1, cacheBust: true });
+    return toPng(nodo, { pixelRatio: 2.5, cacheBust: true, backgroundColor: '#fdeaf4' });
+  }
+
+  private async imagen(): Promise<string> {
+    const lista = this.png ? await this.png : '';
+    if (lista) return lista;
+    this.png = this.generar();
+    return this.png;
+  }
+
+  /** Comparte la imagen (WhatsApp aparece en la lista). Si el celu no deja, la descarga y abre WhatsApp con un mensaje. */
+  async mandar() {
+    this.mandando.set(true);
+    this.error.set(null);
+    try {
+      const url = await this.imagen();
+      const blob = await (await fetch(url)).blob();
+      const archivo = new File([blob], 'contrato-de-noviazgo.png', { type: 'image/png' });
+      if (navigator.canShare?.({ files: [archivo] })) {
+        try {
+          await navigator.share({ files: [archivo], text: this.r.textoMandar });
+          return;
+        } catch (e) {
+          if ((e as DOMException).name === 'AbortError') return; // cerró el menú: no pasa nada
+        }
+      }
+      // Plan B: se descarga y se abre WhatsApp con el mensaje para que adjunte la imagen
+      this.bajar(url);
+      const numero = this.el.whatsapp.replace(/\D/g, '');
+      window.open('https://wa.me/' + numero + '?text=' + encodeURIComponent(this.r.textoMandar + ' (te mando la imagen que se me descargó)'), '_blank');
+    } catch {
+      this.error.set('No se pudo mandar 😿 Probá con Descargar recuerdo o una captura.');
+    } finally {
+      this.mandando.set(false);
+    }
+  }
+
+  private bajar(url: string) {
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'contrato-de-noviazgo.png';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  }
   private readonly doc = viewChild.required<ElementRef<HTMLElement>>('doc');
 
   masAmor() {
@@ -80,17 +193,7 @@ export class PantallaRecuerdo {
     this.descargando.set(true);
     this.error.set(null);
     try {
-      const { toPng } = await import('html-to-image');
-      const nodo = this.doc().nativeElement;
-      // la primera pasada a veces sale sin fuentes en Safari; la segunda ya las tiene
-      await toPng(nodo, { pixelRatio: 1, cacheBust: true });
-      const url = await toPng(nodo, { pixelRatio: 2.5, cacheBust: true, backgroundColor: '#fdeaf4' });
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'contrato-de-noviazgo.png';
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
+      this.bajar(await this.imagen());
     } catch {
       this.error.set('No se pudo descargar 😿 Probá con una captura de pantalla.');
     } finally {

@@ -1,17 +1,21 @@
 import { ChangeDetectionStrategy, Component, ElementRef, inject, output, signal, viewChild } from '@angular/core';
 import { ContratoTexto } from '../componentes/contrato-texto';
 import { Escena } from '../componentes/escena';
-import { festejoGrande, lluviaDeBesos } from '../festejo';
+import { Raspadita } from '../componentes/raspadita';
+import { festejoChico, festejoGrande, lluviaDeBesos } from '../festejo';
 import { GatitoService } from '../gatito.service';
 import { HISTORIA } from '../historia.config';
 
 @Component({
   selector: 'app-contrato',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ContratoTexto, Escena],
+  imports: [ContratoTexto, Escena, Raspadita],
   template: `
     @if (!besando()) {
-      <h2 class="pregunta">{{ c.pregunta }}</h2>
+      <app-raspadita (revelo)="destapar()">
+        <h2 class="pregunta">{{ c.pregunta }}</h2>
+      </app-raspadita>
+      @if (destapada()) {
       <div class="botones" #botones>
         <button type="button" class="btn grande" (click)="si()">{{ c.botonSi }}</button>
         <button type="button" class="btn grande secundario" (click)="beso()">{{ c.botonBeso }}</button>
@@ -22,6 +26,7 @@ import { HISTORIA } from '../historia.config';
           </button>
         }
       </div>
+      }
     } @else {
       <div class="besando">
         <app-escena ilustracion="beso" />
@@ -40,7 +45,8 @@ import { HISTORIA } from '../historia.config';
     .pregunta { margin: 0; text-align: center; font-family: var(--f-titulo); font-size: clamp(1.3rem, 6.2vw, 2.2rem); line-height: 1.2;
       background: linear-gradient(90deg, var(--fucsia), var(--lila)); -webkit-background-clip: text; background-clip: text; color: transparent;
       animation: latir 1.6s ease-in-out infinite; }
-    .botones { display: grid; gap: 12px; }
+    .botones { display: grid; gap: 12px; animation: aparecer .6s cubic-bezier(.2,.9,.3,1.2) both; }
+    @keyframes aparecer { from { opacity: 0; transform: translateY(14px) scale(.96); } }
     .no { justify-self: start; font: inherit; font-weight: 700; font-size: .95rem; color: var(--texto); cursor: pointer;
       padding: 10px 20px; border-radius: 999px; background: rgba(255,255,255,.06); border: 1.5px solid rgba(199,125,255,.35);
       transition: translate .3s cubic-bezier(.3,1.6,.5,1), scale .3s; }
@@ -53,12 +59,19 @@ export class PantallaContrato {
   readonly acepto = output<'si' | 'beso'>();
   readonly c = HISTORIA.contrato;
   readonly besando = signal(false);
+  /** true cuando ya raspó la pregunta. */
+  readonly destapada = signal(false);
   /** Cuántas veces intentó tocar "No" (se achica y al final desaparece). */
   readonly intentosNo = signal(0);
   readonly posNo = signal({ x: 0, y: 0 });
 
   private readonly botones = viewChild<ElementRef<HTMLElement>>('botones');
   private readonly gatito = inject(GatitoService);
+
+  destapar() {
+    this.destapada.set(true);
+    festejoChico();
+  }
 
   si() {
     festejoGrande();
