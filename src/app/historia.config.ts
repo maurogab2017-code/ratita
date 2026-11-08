@@ -50,6 +50,8 @@ export interface Pregunta {
   mikiEntra?: string;
   /** Si es true, las opciones incorrectas se escapan cuando las quiere tocar. */
   escapan?: boolean;
+  /** Fotitos que aparecen al acertar (si no se pone, va una de la lista general, en orden). */
+  fotitos?: string[];
 }
 
 export const HISTORIA = {
@@ -102,6 +104,7 @@ export const HISTORIA = {
       opciones: ['14 de febrero', '6 de agosto', '21 de septiembre', '1 de mayo'],
       correctas: ['6 de agosto'],
       mensajeAcierto: 'Ese día empezó una de las historias más lindas de mi vida ❤️',
+      fotitos: ['assets/fotos/fotito-8.jpg', 'assets/fotos/fotito-1.jpg'],
       foto: 'assets/fotos/01-primer-encuentro.jpg',
       ilustracion: 'corazon',
     },
@@ -151,6 +154,7 @@ export const HISTORIA = {
         'assets/fotos/fotito-2.jpg',
         'assets/fotos/fotito-4.jpg',
         'assets/fotos/fotito-7.jpg',
+        'assets/fotos/fotito-8.jpg',
       ],
       mensajeAcierto: '¡Esa! Aunque en todas salís hermosa 📸',
       ilustracion: 'corazon',
@@ -177,6 +181,7 @@ export const HISTORIA = {
         'Mmm, no no. Haceme memoria… 😏',
       ],
       mensajeAcierto: '¡Vos! Se te escapó a vos primero… pero después yo 🙊❤️',
+      fotitos: ['assets/fotos/fotito-6.jpg', 'assets/fotos/fotito-9.jpg'],
       ilustracion: 'beso',
     },
     {
@@ -186,6 +191,7 @@ export const HISTORIA = {
       tipo: 'todas-correctas',
       opciones: ['Tu sonrisa', 'Tus ojos', 'Tus mimos', 'Tus abrazos', 'Tu forma de ser tan tierna', 'Tu nariz', 'Cómo me hacés sentir'],
       mensajeAcierto: 'Todas valen… pero la respuesta correcta es TODO 💜',
+      fotitos: ['assets/fotos/fotito-10.jpg', 'assets/fotos/fotito-11.jpg'],
       ilustracion: 'abrazo',
     },
     {
@@ -219,6 +225,10 @@ export const HISTORIA = {
     'assets/fotos/fotito-5.jpg',
     'assets/fotos/fotito-6.jpg',
     'assets/fotos/fotito-7.jpg',
+    'assets/fotos/fotito-8.jpg',
+    'assets/fotos/fotito-9.jpg',
+    'assets/fotos/fotito-10.jpg',
+    'assets/fotos/fotito-11.jpg',
   ],
 
   /** Lo que dice Miki cuando acierta (se elige una al azar). */

@@ -65,8 +65,8 @@ export function normalizar(texto: string): string {
         <div class="acierto">
           <app-escena [ilustracion]="pregunta().ilustracion" [foto]="elegida() ?? pregunta().foto" />
           <p class="mensaje">{{ pregunta().mensajeAcierto }}</p>
-          @if (fotito() && pregunta().tipo !== 'fotos') {
-            <app-fotitos [fotos]="[fotito()!]" />
+          @if (fotitos().length && pregunta().tipo !== 'fotos') {
+            <app-fotitos [fotos]="fotitos()" />
           }
           <button type="button" class="btn grande" (click)="siguiente.emit()">{{ ultima() ? 'Seguir ❤️' : 'Siguiente pregunta' }}</button>
         </div>
@@ -79,6 +79,7 @@ export function normalizar(texto: string): string {
     h2 { margin: 0 0 22px; font-family: var(--f-titulo); font-size: clamp(1.45rem, 6vw, 2rem); line-height: 1.2; }
     .opciones { display: grid; gap: 10px; }
     .fotos { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; padding: 4px; }
+    .fotos .foto-op:last-child:nth-child(odd) { grid-column: 1 / -1; justify-self: center; width: calc(50% - 7px); }
     .foto-op { padding: 6px 6px 20px; background: #fff; border: 0; border-radius: 3px; cursor: pointer;
       transform: rotate(var(--giro)); box-shadow: 0 8px 20px rgba(0,0,0,.4); transition: transform .2s; }
     .foto-op:focus-visible { transform: rotate(0) scale(1.04); }
@@ -117,9 +118,12 @@ export class PantallaPregunta {
   readonly ultima = input(false);
   /** Número de pregunta, para elegir qué fotito mostrar. */
   readonly numero = input(0);
-  readonly fotito = computed(() => {
+  /** Las fotitos de esta pregunta: las propias si tiene, si no una de la lista general. */
+  readonly fotitos = computed(() => {
+    const propias = this.pregunta().fotitos;
+    if (propias?.length) return propias;
     const f = HISTORIA.fotitos;
-    return f.length ? f[this.numero() % f.length] : null;
+    return f.length ? [f[this.numero() % f.length]] : [];
   });
   readonly siguiente = output();
 
