@@ -280,6 +280,6 @@ export const HISTORIA = {
     aclaracion: 'Este contrato no se puede romper nunca 💜',
     botonDescargar: 'Descargar recuerdo',
     botonMandar: 'Mandáselo a tu bebé 📲',
-    textoMandar: '¡Ya firmé nuestro contrato! Ahora sí, oficialmente tu ratita 💜',
+    textoMandar: '¡Ahora sí, tu ratita es tu novia! 💜',
   },
 };
