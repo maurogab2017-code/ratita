@@ -34,11 +34,13 @@ import { HISTORIA } from '../historia.config';
       </div>
     }
 
-    <article class="cartulina">
+    @if (destapada()) {
+    <article class="cartulina aparece">
       <span class="esquina e1">♥</span><span class="esquina e2">♥</span>
       <span class="esquina e3">♥</span><span class="esquina e4">♥</span>
       <app-contrato-texto [titulo]="c.tituloPropuesta" />
     </article>
+    }
   `,
   styles: `
     :host { display: grid; gap: 22px; width: 100%; }
@@ -46,6 +48,7 @@ import { HISTORIA } from '../historia.config';
       background: linear-gradient(90deg, var(--fucsia), var(--lila)); -webkit-background-clip: text; background-clip: text; color: transparent;
       animation: latir 1.6s ease-in-out infinite; }
     .botones { display: grid; gap: 12px; animation: aparecer .6s cubic-bezier(.2,.9,.3,1.2) both; }
+    .aparece { animation: aparecer .7s .15s cubic-bezier(.2,.9,.3,1.2) both; }
     @keyframes aparecer { from { opacity: 0; transform: translateY(14px) scale(.96); } }
     .no { justify-self: start; font: inherit; font-weight: 700; font-size: .95rem; color: var(--texto); cursor: pointer;
       padding: 10px 20px; border-radius: 999px; background: rgba(255,255,255,.06); border: 1.5px solid rgba(199,125,255,.35);
