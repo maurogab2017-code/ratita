@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, DestroyRef, ElementRef, afterNextRe
 import { ContratoTexto } from '../componentes/contrato-texto';
 import { Soplar } from '../componentes/soplar';
 import { lluviaDeAmor } from '../festejo';
+import { dibujarRecuerdo, svgParaCanvas } from '../imagen-recuerdo';
 import { HISTORIA } from '../historia.config';
 import { Firmado } from './firma';
 
@@ -132,13 +133,29 @@ export class PantallaRecuerdo {
     }
   }
 
-  /** Genera el PNG del contrato firmado. */
-  private async generar(): Promise<string> {
-    const { toPng } = await import('html-to-image');
-    const nodo = this.doc().nativeElement;
-    // la primera pasada a veces sale sin fuentes en Safari; la segunda ya las tiene
-    await toPng(nodo, { pixelRatio: 1, cacheBust: true });
-    return toPng(nodo, { pixelRatio: 2.5, cacheBust: true, backgroundColor: '#fdeaf4' });
+  /** Genera el PNG del contrato firmado (dibujado en canvas: sale completo también en iPhone). */
+  private generar(): Promise<string> {
+    const d = this.datos();
+    const c = HISTORIA.contrato;
+    const ratitas = this.doc().nativeElement.querySelectorAll('app-contrato-texto app-ratita');
+    const ella = svgParaCanvas(ratitas[0] ?? null);
+    const el = svgParaCanvas(ratitas[1] ?? null);
+    return dibujarRecuerdo({
+      titulo: c.titulo,
+      partes: c.partes,
+      clausula: c.clausula,
+      vigencia: c.vigencia,
+      mensaje: this.r.mensaje,
+      aclaracion: this.r.aclaracion,
+      nombreEl: this.el.nombre,
+      apodoEl: this.el.apodo,
+      firmaEl: d.firmaEl,
+      nombreElla: d.nombre,
+      firmaElla: d.firma,
+      fecha: d.fecha,
+      selfie: d.selfie,
+      ratitas: ella && el ? { ella, el } : undefined,
+    });
   }
 
   private async imagen(): Promise<string> {
