@@ -81,7 +81,8 @@ export function normalizar(texto: string): string {
     .fotos { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; padding: 4px; }
     .foto-op { padding: 6px 6px 20px; background: #fff; border: 0; border-radius: 3px; cursor: pointer;
       transform: rotate(var(--giro)); box-shadow: 0 8px 20px rgba(0,0,0,.4); transition: transform .2s; }
-    .foto-op:hover, .foto-op:focus-visible { transform: rotate(0) scale(1.04); }
+    .foto-op:focus-visible { transform: rotate(0) scale(1.04); }
+    @media (hover: hover) and (pointer: fine) { .foto-op:hover { transform: rotate(0) scale(1.04); } }
     .foto-op:active { transform: scale(.96); }
     .foto-op img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 2px; }
     .opciones.muchas { grid-template-columns: 1fr 1fr; }
@@ -92,7 +93,7 @@ export function normalizar(texto: string): string {
       background: rgba(255,255,255,.06); border: 1.5px solid rgba(199,125,255,.35);
       transition: transform .15s, background .2s, border-color .2s;
     }
-    .opcion:hover { background: rgba(255,46,147,.14); border-color: var(--fucsia); }
+    @media (hover: hover) and (pointer: fine) { .opcion:hover { background: rgba(255,46,147,.14); border-color: var(--fucsia); } }
     .opcion:active { transform: scale(.97); }
     .opcion.mal { opacity: .45; border-style: dashed; }
     .opcion { transition: translate .25s cubic-bezier(.3,1.6,.5,1), transform .15s, background .2s, border-color .2s; position: relative; z-index: 1; }

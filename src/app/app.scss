@@ -50,14 +50,12 @@
   from {
     opacity: 0;
     transform: translateY(26px) scale(0.97);
-    filter: blur(6px);
   }
 }
 @keyframes salir {
   to {
     opacity: 0;
     transform: translateY(-20px) scale(0.98);
-    filter: blur(6px);
   }
 }
 

@@ -17,7 +17,7 @@ import { HISTORIA } from '../historia.config';
       </app-raspadita>
       @if (destapada()) {
       <div class="botones" #botones>
-        <button type="button" class="btn grande" (click)="si()">{{ c.botonSi }}</button>
+        <button type="button" class="btn grande" [class.elegido]="eligio()" (click)="si()">{{ eligio() ? '¡SÍIII! 💜' : c.botonSi }}</button>
         <button type="button" class="btn grande secundario" (click)="beso()">{{ c.botonBeso }}</button>
         @if (intentosNo() < c.retosNo.length) {
           <button type="button" class="no" [style.translate]="posNo().x + 'px ' + posNo().y + 'px'"
@@ -53,6 +53,7 @@ import { HISTORIA } from '../historia.config';
     .no { justify-self: start; font: inherit; font-weight: 700; font-size: .95rem; color: var(--texto); cursor: pointer;
       padding: 10px 20px; border-radius: 999px; background: rgba(255,255,255,.06); border: 1.5px solid rgba(199,125,255,.35);
       transition: translate .3s cubic-bezier(.3,1.6,.5,1), scale .3s; }
+    .btn.elegido { transform: scale(1.04); box-shadow: 0 0 0 4px rgba(255,255,255,.5), 0 10px 30px rgba(255,46,147,.6); }
     .besando { display: grid; justify-items: center; gap: 8px; }
     .muak { margin: 0; font-weight: 800; font-size: 1.2rem; color: var(--rosa); }
     @keyframes latir { 0%,100% { transform: scale(1); } 50% { transform: scale(1.05); } }
@@ -62,6 +63,8 @@ export class PantallaContrato {
   readonly acepto = output<'si' | 'beso'>();
   readonly c = HISTORIA.contrato;
   readonly besando = signal(false);
+  /** Ya tocó "Sí": se marca al instante (en iPhone el cambio de pantalla puede tardar un poquito). */
+  readonly eligio = signal(false);
   /** true cuando ya raspó la pregunta. */
   readonly destapada = signal(false);
   /** Cuántas veces intentó tocar "No" (se achica y al final desaparece). */
@@ -77,11 +80,15 @@ export class PantallaContrato {
   }
 
   si() {
-    festejoGrande();
+    if (this.eligio() || this.besando()) return;
+    this.eligio.set(true);
+    // primero cambia la pantalla y recién después arranca la lluvia de corazones (que es pesada)
     this.acepto.emit('si');
+    setTimeout(() => festejoGrande(), 300);
   }
 
   beso() {
+    if (this.eligio() || this.besando()) return;
     this.besando.set(true);
     lluviaDeBesos();
     setTimeout(() => {
