@@ -181,7 +181,7 @@ export const HISTORIA = {
       pregunta: '¿Quién dijo "te amo" primero?',
       mikiEntra: 'Yo sé la respuesta… 🤫',
       tipo: 'opciones',
-      opciones: ['Vos', 'Yo', 'Los dos juntos'],
+      opciones: ['Vos', 'Yo (Mauro)', 'Los dos juntos'],
       correctas: ['Vos'],
       reaccionesError: [
         'Nooo, fuiste vos… ¡se te escapó! 🙊',
