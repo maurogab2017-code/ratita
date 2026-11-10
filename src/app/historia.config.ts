@@ -101,7 +101,7 @@ export const HISTORIA = {
       pregunta: '¿Qué día nos vimos por primera vez?',
       tipo: 'opciones',
       // La fecha correcta tiene que estar en "opciones" y también en "correctas".
-      opciones: ['14 de febrero', '6 de agosto', '21 de septiembre', '1 de mayo'],
+      opciones: ['12 de agosto', '6 de agosto', '13 de agosto', '7 de agosto'],
       correctas: ['6 de agosto'],
       mensajeAcierto: 'Ese día empezó una de las historias más lindas de mi vida ❤️',
       fotitos: ['assets/fotos/fotito-8.jpg', 'assets/fotos/fotito-1.jpg'],
