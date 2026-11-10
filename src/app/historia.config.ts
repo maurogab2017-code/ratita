@@ -140,7 +140,7 @@ export const HISTORIA = {
       correctas: ['Güemes'],
       placeholder: 'Escribilo acá…',
       pistas: ['Es un barrio de Córdoba 🏘️', 'Empieza con G… 😏', 'G-ü-e-m-e-s 🙈'],
-      mensajeAcierto: '¡Sisisisi! Güemes, nuestro lugar. Cada vuelta ahí con vos es especial ✨',
+      mensajeAcierto: '¡Sisisisi! Güemes 💜 Aunque con vos cualquier lugar es mi lugar favorito, bebé',
       foto: 'assets/fotos/04-guemes.jpg',
       ilustracion: 'abrazo',
     },
