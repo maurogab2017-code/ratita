@@ -31,7 +31,7 @@ export function normalizar(texto: string): string {
 
       @if (!acerto()) {
         @if (pregunta().tipo === 'fotos') {
-          <div class="fotos">
+          <div class="fotos" [class.muchas]="(pregunta().opciones?.length ?? 0) > 6">
             @for (op of pregunta().opciones; track op; let i = $index) {
               <button type="button" class="foto-op" [style.--giro.deg]="[-4, 3, 4, -3][i % 4]" (click)="elegir(op)" aria-label="Elegir esta foto">
                 <img [src]="op" alt="" />
@@ -79,7 +79,9 @@ export function normalizar(texto: string): string {
     h2 { margin: 0 0 22px; font-family: var(--f-titulo); font-size: clamp(1.45rem, 6vw, 2rem); line-height: 1.2; }
     .opciones { display: grid; gap: 10px; }
     .fotos { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; padding: 4px; }
-    .fotos .foto-op:last-child:nth-child(odd) { grid-column: 1 / -1; justify-self: center; width: calc(50% - 7px); }
+    .fotos.muchas { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .fotos.muchas .foto-op { padding: 4px 4px 14px; }
+    .fotos:not(.muchas) .foto-op:last-child:nth-child(odd) { grid-column: 1 / -1; justify-self: center; width: calc(50% - 7px); }
     .foto-op { padding: 6px 6px 20px; background: #fff; border: 0; border-radius: 3px; cursor: pointer;
       transform: rotate(var(--giro)); box-shadow: 0 8px 20px rgba(0,0,0,.4); transition: transform .2s; }
     .foto-op:focus-visible { transform: rotate(0) scale(1.04); }
