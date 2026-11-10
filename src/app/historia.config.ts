@@ -128,7 +128,7 @@ export const HISTORIA = {
       reaccionesError: ['Ese es el primero… ¡quiero el segundo! 🧸', 'Mmm, no… pensá en su segundo nombre 🙈'],
       placeholder: 'Escribí su segundo nombre…',
       pistas: ['Empieza con C… 😉', 'Tiene 6 letras y dos vocales juntas 🧸', 'C-a-e-l-i-a 🙈'],
-      mensajeAcierto: '¡Lomito Caelia! 🧸💜',
+      mensajeAcierto: '¡Muyyy bien! Lomito Caelia 🧸💜',
       foto: 'assets/fotos/03-osito.jpg',
       ilustracion: 'osito',
     },
@@ -147,7 +147,7 @@ export const HISTORIA = {
     {
       id: 'foto-favorita',
       antetitulo: 'Capítulo 5 · Nuestras fotos',
-      pregunta: '¿Cuál es mi foto favorita?',
+      pregunta: '¿En qué foto salís más linda?',
       mikiEntra: '¡Elegí bien, eh! 📸',
       tipo: 'fotos',
       opciones: [
@@ -157,7 +157,7 @@ export const HISTORIA = {
         'assets/fotos/fotito-7.jpg',
         'assets/fotos/fotito-8.jpg',
       ],
-      mensajeAcierto: '¡Esa! Aunque en todas salís hermosa 📸',
+      mensajeAcierto: '¡Trampa! En todas salís hermosaaaaaaa 📸',
       ilustracion: 'corazon',
     },
     {
