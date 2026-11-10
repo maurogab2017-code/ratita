@@ -88,8 +88,8 @@ export const HISTORIA = {
   },
 
   bienvenida: {
-    saludo: 'Hola, mi ratita bella ❤️',
-    subtitulo: 'Tu ratita te preparó algo muy especial.',
+    saludo: 'Hola, mi ratita bella hermosa ❤️',
+    subtitulo: 'Te hice un regalito: una página con nuestra historia 🎁',
     pregunta: '¿A ver cuánto te acordás de lo nuestro?',
     boton: 'Empezar nuestra historia',
   },
@@ -121,12 +121,13 @@ export const HISTORIA = {
     {
       id: 'osito',
       antetitulo: 'Capítulo 3 · El tercero en la relación',
-      pregunta: '¿Cómo se llama nuestro osito?',
+      pregunta: '¿Cuál es el segundo nombre de nuestro oso?',
       tipo: 'texto',
-      // Alcanza con que escriba alguna de estas (sin importar tildes ni mayúsculas).
-      correctas: ['Lomito Caelia', 'Lomo Caelia', 'Lomito', 'Lomo', 'Caelia'],
-      placeholder: 'Escribí su nombre…',
-      pistas: ['Empieza con "Lomo"… 🧸', 'Tiene apellido… empieza con C 😉', 'Lomito C-a-e-l-i-a 🙈'],
+      // Vale "Caelia" (sin importar tildes ni mayúsculas; también "Lomito Caelia").
+      correctas: ['Caelia'],
+      reaccionesError: ['Ese es el primero… ¡quiero el segundo! 🧸', 'Mmm, no… pensá en su segundo nombre 🙈'],
+      placeholder: 'Escribí su segundo nombre…',
+      pistas: ['Empieza con C… 😉', 'Tiene 6 letras y dos vocales juntas 🧸', 'C-a-e-l-i-a 🙈'],
       mensajeAcierto: '¡Lomito Caelia! 🧸💜',
       foto: 'assets/fotos/03-osito.jpg',
       ilustracion: 'osito',
@@ -164,7 +165,7 @@ export const HISTORIA = {
       antetitulo: 'Capítulo 6 · Cosas nuestras',
       pregunta: '¿Cómo me gusta que me digas?',
       tipo: 'todas-correctas',
-      opciones: ['Hermoso', 'Guapo', 'Corazoncito', 'Bello', 'Bebé', 'Amor'],
+      opciones: ['Hermoso', 'Guapo', 'Corazoncito', 'Bello', 'Bebé', 'Amor', 'Ratita'],
       mensajeAcierto: '¡Todas son correctas si vienen de tuu! 🥰',
       ilustracion: 'ratita',
     },
@@ -189,8 +190,8 @@ export const HISTORIA = {
       antetitulo: 'Capítulo 8 · Lo que más me gusta',
       pregunta: '¿Qué es lo que más me gusta de vos?',
       tipo: 'todas-correctas',
-      opciones: ['Tu sonrisa', 'Tus ojos', 'Tus mimos', 'Tus abrazos', 'Tu forma de ser tan tierna', 'Tu nariz', 'Cómo me hacés sentir'],
-      mensajeAcierto: 'Todas valen… pero la respuesta correcta es TODO 💜',
+      opciones: ['Tu sonrisa', 'Tus ojos', 'Tus mimos', 'Tus abrazos', 'Tus besos', 'Tu forma de ser tan tierna', 'Tu nariz', 'Cómo me hacés sentir'],
+      mensajeAcierto: 'La respuesta es TODO 💜 Me encantás, sos la más hermosa del mundo',
       fotitos: ['assets/fotos/fotito-10.jpg', 'assets/fotos/fotito-11.jpg'],
       ilustracion: 'abrazo',
     },
@@ -208,7 +209,7 @@ export const HISTORIA = {
         '¿Poquito? El gatito está anotando todo 🐱📝',
         'Mmm… esa respuesta no la acepto 🙅',
       ],
-      mensajeAcierto: 'Yo te amo muchísimo más, mi bella ❤️',
+      mensajeAcierto: 'YO TE AMO MUCHÍSIMO MÁS, MI BELLA ❤️',
       ilustracion: 'corazon',
     },
   ] satisfies Pregunta[] as Pregunta[],
@@ -246,9 +247,9 @@ export const HISTORIA = {
   mensajeFinal: {
     titulo: 'Bueno, mi ratita…',
     texto:
-      'Si llegaste hasta acá, quiero que sepas que cada momento que compartimos significa muchísimo para mí. ' +
+      'Si llegaste hasta acá, quiero que sepas que cada momento que compartimos significa muchísimo para mí. Sos lo más lindo que me pasó. ' +
       'Me encanta tenerte en mi vida, hacerte reír, abrazarte, cuidarte y seguir descubriendo todo lo lindo que nos espera. ' +
-      'Ya compartimos muchos momentos hermosos, pero todavía tengo una pregunta para ti…',
+      'Ya compartimos muchos momentos, pero ahora quiero hacerte una pregunta para tii…',
     boton: 'Descubrir la última sorpresa',
   },
 
@@ -263,7 +264,7 @@ export const HISTORIA = {
     /** Título la primera vez que aparece (antes de que diga que sí). */
     tituloPropuesta: 'CONTRATO OFICIAL',
     partes: 'Entre mi ratita bella y su ratita.',
-    clausula: 'Cláusula única: seguir compartiendo besos, abrazos, mimos y muchos momentos juntos.',
+    clausula: 'Cláusula única: seguir compartiendo abrazos, besos, citas y muchos momentos juntos.',
     vigencia: 'Vigencia: para siempre, con renovación diaria mediante besitos.',
     pregunta: '¿QUERÉS SER MI NOVIA? ❤️',
     botonSi: 'SÍ, QUIERO SER TU RATITA OFICIAL ❤️',
