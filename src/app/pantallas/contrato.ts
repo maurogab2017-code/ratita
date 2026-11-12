@@ -18,7 +18,6 @@ import { HISTORIA } from '../historia.config';
       @if (destapada()) {
       <div class="botones" #botones>
         <button type="button" class="btn grande" [class.elegido]="eligio()" (click)="si()">{{ eligio() ? '¡SÍIII! 💜' : c.botonSi }}</button>
-        <button type="button" class="btn grande secundario" (click)="beso()">{{ c.botonBeso }}</button>
         @if (intentosNo() < c.retosNo.length) {
           <button type="button" class="no" [style.translate]="posNo().x + 'px ' + posNo().y + 'px'"
             [style.scale]="1 - intentosNo() * 0.12" (pointerenter)="tentarNo($event)" (click)="escaparNo()">
