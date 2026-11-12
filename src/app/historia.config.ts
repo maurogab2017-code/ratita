@@ -255,6 +255,7 @@ export const HISTORIA = {
     texto:
       'Si llegaste hasta acá, quiero que sepas que cada momento que compartimos significa muchísimo para mí. Sos lo más lindo que me pasó. ' +
       'Me encanta tenerte en mi vida, hacerte reír, abrazarte, cuidarte y seguir descubriendo todo lo lindo que nos espera. ' +
+      'Gracias por dejarme entrar en tu vida, y te quiero en la mía. ' +
       'Ya compartimos muchos momentos, pero ahora quiero hacerte una pregunta para tii…',
     boton: 'Descubrir la última sorpresa',
   },
