@@ -42,9 +42,6 @@ import { Firmado } from './firma';
       <button type="button" class="btn grande" (click)="mandar()" [disabled]="mandando()">
         {{ mandando() ? 'Preparando…' : r.botonMandar }}
       </button>
-      <button type="button" class="btn grande secundario" (click)="descargar()" [disabled]="descargando()">
-        {{ descargando() ? 'Preparando…' : r.botonDescargar + ' 📸' }}
-      </button>
       @if (error()) { <p class="error">{{ error() }}</p> }
       <button type="button" class="btn grande secundario" (click)="masAmor()">Tirar más amor 🐭🐱🧸💖</button>
       @if (sacudir() === 'activo') {
